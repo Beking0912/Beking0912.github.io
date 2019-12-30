@@ -112,9 +112,11 @@ $(document).ready(function() {
 $(function() {
   if (location.pathname !== "/") return;
   var options = {
-    strings: ["First sentence.", "Second sentence."],
+    strings: ["I love ...Dota2.", "I love JavaScript.", "I love TypeScript."],
     typeSpeed: 30,
-    startDelay: 300
+    startDelay: 300,
+    backSpeed: 20,
+    smartBackspace: true,
     // loop: true,
   };
   var typed = new Typed(".description .prompt", options);
