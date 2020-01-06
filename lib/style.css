@@ -1,0 +1,31 @@
+.coding {
+    position: relative;
+    margin-top: 0.5em;
+    /* min-height: 90px; */
+  }
+  
+  .coding .prompt {
+    display: inline;
+    white-space: pre-wrap;
+    line-height: 30px;
+    margin-bottom: 0.75em;
+  }
+  
+  .coding .typed-cursor {
+    display: inline;
+  }
+  
+  .coding .typed-cursor:after {
+    display: inline;
+    vertical-align: -0.15em;
+    width: 0.5em;
+    height: 12px;
+    margin-left: 5px;
+    background: #2bbc8a;
+    box-shadow: 0 0 0 rgba(31, 240, 66, 0.65);
+    -webkit-animation: cursor-blink 1.25s steps(1) infinite;
+    -o-animation: cursor-blink 1.25s steps(1) infinite;
+    animation: cursor-blink 1.25s steps(1) infinite;
+    content: '';
+  }
+  
