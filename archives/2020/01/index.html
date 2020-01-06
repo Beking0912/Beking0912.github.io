@@ -79,6 +79,9 @@
       
     </ul>
   </div>
+  <div class="description coding">
+    <p class="en prompt"></p>
+  </div>
 </header>
 
         
@@ -150,9 +153,7 @@
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
 
-    <!-- scripts.ejs 不蒜子 http://busuanzi.ibruce.info/  -->
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<!-- jquery -->
+    <!-- jquery -->
 
 <script src="/lib/jquery/jquery.min.js"></script>
 
@@ -171,45 +172,7 @@
 <!-- Baidu Analytics -->
 
 <!-- Disqus Comments -->
-<script
-async
-src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
-></script>
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.10/SmoothScroll.min.js"
-crossorigin="anonymous"
-></script>
-<script src="https://cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
-<script>
-var a_idx = 1;
-jQuery(document).ready(function($) {
-  $("html").click(function(e) {
-    var $i = $("<span />").text("+" + a_idx + "S");
-    a_idx = a_idx + 1;
-          var x = e.pageX,
-            y = e.pageY;
-          $i.css({
-            "z-index": 1,
-            top: y - 20,
-            left: x,
-            position: "absolute",
-            "font-weight": "bold",
-            color: "#ff6651"
-          });
-          $("body").append($i);
-          $i.animate(
-            {
-              top: y - 180,
-              opacity: 0
-            },
-            1500,
-            function() {
-              $i.remove();
-            }
-          );
-        });
-      });
-    </script>
+
 
 </body>
 </html>
