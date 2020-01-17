@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<script
+async
+src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+></script>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.10/SmoothScroll.min.js"
+crossorigin="anonymous"
+></script>
+<script src="https://cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+<script>
+var a_idx = 1;
+jQuery(document).ready(function($) {
+  $("html").click(function(e) {
+    var $i = $("<span />").text("+" + a_idx + "S");
+    a_idx = a_idx + 1;
+          var x = e.pageX,
+            y = e.pageY;
+          $i.css({
+            "z-index": 1,
+            top: y - 20,
+            left: x,
+            position: "absolute",
+            "font-weight": "bold",
+            color: "#ff6651"
+          });
+          $("body").append($i);
+          $i.animate(
+            {
+              top: y - 180,
+              opacity: 0
+            },
+            1500,
+            function() {
+              $i.remove();
+            }
+          );
+        });
+      });
+    </script>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="leetcode 5. 最长回文子串 | 参考题解 | 仅供学习  Manacher算法概要Manacher算法本质上是‘中心扩散法’，采用和kmp算法类似的思想，在遍历过程中记录已经遍历过的子串的信息，是典型的‘以空间换时间’思想的体现。专门用于解决‘最长回文子串’问题，时间复杂度为O(n)。 Manacher算法具体流程第一步:对原始字符串进行预处理(添加分隔符)在字符串的首尾、相邻的字符中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Manacher 马拉车不完全指北">
+<meta property="og:url" content="http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/index.html">
+<meta property="og:site_name" content="Beking&#39;s notebook">
+<meta property="og:description" content="leetcode 5. 最长回文子串 | 参考题解 | 仅供学习  Manacher算法概要Manacher算法本质上是‘中心扩散法’，采用和kmp算法类似的思想，在遍历过程中记录已经遍历过的子串的信息，是典型的‘以空间换时间’思想的体现。专门用于解决‘最长回文子串’问题，时间复杂度为O(n)。 Manacher算法具体流程第一步:对原始字符串进行预处理(添加分隔符)在字符串的首尾、相邻的字符中">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://pic.leetcode-cn.com/d9546795e5c73d06b7c77645aef92413f794b3850a62492682a46eb00c9ee711.jpg">
+<meta property="og:image" content="https://pic.leetcode-cn.com/4ba4319f13bee429bb95ba119dcaefe71c9644bcf9e9be3ba2637d13fcccd3d6.jpg">
+<meta property="og:image" content="https://pic.leetcode-cn.com/05e76869add71c1cbf396bb89ee5ad7f560cc6c5e60926ceaef00a3bbc32c9e4.jpg">
+<meta property="og:image" content="https://pic.leetcode-cn.com/1fc56a2ecb6b67ccb5262b5cc3cfcff3041fdc0c6cd8cb0c329ef869644253a4.jpg">
+<meta property="og:image" content="https://pic.leetcode-cn.com/74627724154804d8aa7062d1026ffeffa9f6202c1afb38603b91f7eb83eaec17.jpg">
+<meta property="og:image" content="https://pic.leetcode-cn.com/73ec2e14a7501999ccd6e60c77bd08415ccdf36fc6da4ab2f29311735a594e66.jpg">
+<meta property="og:image" content="https://pic.leetcode-cn.com/d404aff63ecd764aaa70e6bb961a7e4286b8b2afdb6b4ce4bf696fb8eeb55086.jpg">
+<meta property="article:published_time" content="2020-01-17T02:16:24.000Z">
+<meta property="article:modified_time" content="2020-01-17T03:42:13.742Z">
+<meta property="article:author" content="Beking">
+<meta property="article:tag" content="数据结构与算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.leetcode-cn.com/d9546795e5c73d06b7c77645aef92413f794b3850a62492682a46eb00c9ee711.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Manacher 马拉车不完全指北</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/Beking0912" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/01/16/%E8%9A%82%E8%9A%81%E7%88%AC%E7%AB%BF-%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%E6%8C%87%E5%8D%97/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&text=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&title=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&is_video=false&description=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Manacher 马拉车不完全指北&body=Check out this article: http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&title=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&title=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&title=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&title=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&name=Manacher 马拉车不完全指北&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&t=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Manacher算法概要"><span class="toc-number">1.</span> <span class="toc-text">Manacher算法概要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Manacher算法具体流程"><span class="toc-number">2.</span> <span class="toc-text">Manacher算法具体流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步-对原始字符串进行预处理-添加分隔符"><span class="toc-number">2.1.</span> <span class="toc-text">第一步:对原始字符串进行预处理(添加分隔符)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步-计算辅助数组p"><span class="toc-number">2.2.</span> <span class="toc-text">第二步:计算辅助数组p</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#辅助数组p的结论"><span class="toc-number">2.3.</span> <span class="toc-text">辅助数组p的结论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充说明"><span class="toc-number">3.</span> <span class="toc-text">补充说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复杂度分析"><span class="toc-number">4.</span> <span class="toc-text">复杂度分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Manacher算法改进"><span class="toc-number">5.</span> <span class="toc-text">Manacher算法改进</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#需要改进的情况"><span class="toc-number">5.1.</span> <span class="toc-text">需要改进的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体做法"><span class="toc-number">5.2.</span> <span class="toc-text">具体做法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环变量i与maxRight的关系"><span class="toc-number">5.3.</span> <span class="toc-text">循环变量i与maxRight的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复杂度分析-1"><span class="toc-number">6.</span> <span class="toc-text">复杂度分析</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Manacher 马拉车不完全指北
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Beking's notebook</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-01-17T02:16:24.000Z" itemprop="datePublished">2020-01-17</time>
+        
+      
+    </div>
+
+
+      <!-- 页面访问量 -->	
+      <span>	
+        |	
+        <span>阅读量 </span>	
+        <span class="busuanzi-value" id="busuanzi_value_page_pv" >296</span>	
+      </span>
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p><a href="">leetcode 5. 最长回文子串</a> | <a href="https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zhong-xin-kuo-san-dong-tai-gui-hua-by-liweiwei1419/">参考题解</a> | 仅供学习</p>
+</blockquote>
+<h2 id="Manacher算法概要"><a href="#Manacher算法概要" class="headerlink" title="Manacher算法概要"></a>Manacher算法概要</h2><p>Manacher算法本质上是‘中心扩散法’，采用和kmp算法类似的思想，在遍历过程中记录已经遍历过的子串的信息，是典型的‘以空间换时间’思想的体现。专门用于解决‘最长回文子串’问题，时间复杂度为O(n)。</p>
+<h2 id="Manacher算法具体流程"><a href="#Manacher算法具体流程" class="headerlink" title="Manacher算法具体流程"></a>Manacher算法具体流程</h2><h3 id="第一步-对原始字符串进行预处理-添加分隔符"><a href="#第一步-对原始字符串进行预处理-添加分隔符" class="headerlink" title="第一步:对原始字符串进行预处理(添加分隔符)"></a>第一步:对原始字符串进行预处理(添加分隔符)</h3><p><strong>在字符串的首尾、相邻的字符中插入分隔符。</strong></p>
+<p>说明：</p>
+<ol>
+<li>分隔符是一个字符，种类单一，并且不能是原始字符串中出现过的字符。</li>
+<li>加入分隔符后使得‘间隙’有了具体位置，并且新字符串中的任意一个回文子串在原始字符串中一定能找到唯一一个回文子串与之对应，即<strong>对新字符串的回文子串的研究就能得到原始字符串的回文子串</strong>。</li>
+<li>新字符串的回文子串的长度一定是奇数。</li>
+<li>新字符串的回文子串一定以分隔符作为边界。<br><img src="https://pic.leetcode-cn.com/d9546795e5c73d06b7c77645aef92413f794b3850a62492682a46eb00c9ee711.jpg" alt=""></li>
+</ol>
+<h3 id="第二步-计算辅助数组p"><a href="#第二步-计算辅助数组p" class="headerlink" title="第二步:计算辅助数组p"></a>第二步:计算辅助数组p</h3><p><strong>辅助数组p记录了新字符串中以每个字符为中心的回文子串的信息</strong></p>
+<p>说明：以当前字符为中心向左右两边同时扩散，记录能够扩散的最大步数。</p>
+<p>对于字符串‘<code>abbabb</code>’，手动计算得到辅助数组p的流程如下：</p>
+<table>
+<thead>
+<tr>
+<th>char</th>
+<th>#</th>
+<th>a</th>
+<th>#</th>
+<th>b</th>
+<th>#</th>
+<th>b</th>
+<th>#</th>
+<th>a</th>
+<th>#</th>
+<th>b</th>
+<th>#</th>
+<th>b</th>
+<th>#</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>index</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+<td>11</td>
+<td>12</td>
+</tr>
+<tr>
+<td>p</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>第一行数组char：原始字符串加上分隔符以后的每个字符。</li>
+<li>第二行数组index：数组索引。</li>
+<li>第三行p：记录最大步数。</li>
+</ul>
+<ol>
+<li>以<code>char[0]=&#39;#&#39;</code>为中心，同时向左右两边扩散，走一步就碰到边界，因此能扩散的最大步长为0，即<code>p[0]=0</code>。</li>
+<li>以<code>char[1]=&#39;a&#39;</code>为中心，同时向左右两边扩散，走一步左右两边都是<code>&#39;#&#39;</code>构成回文子串，于是继续向左右两边扩散，左边碰到边界，因此能扩散的最大步长为1，即<code>p[1]=1</code>。</li>
+<li>以<code>char[2]=&#39;#&#39;</code>为中心，同时向左右两边扩散，走一步左边<code>a</code>右边<code>b</code>不匹配，因此能扩散的最大步长为0，即<code>p[2]=0</code>。</li>
+<li>以<code>char[3]=&#39;b&#39;</code>为中心，同时向左右两边扩散，走一步左右两边都是<code>&#39;#&#39;</code>构成回文子串，于是继续向左右两边扩散，走一步左边<code>a</code>右边<code>b</code>不匹配，因此能扩散的最大步长为1，即<code>p[3]=1</code>。</li>
+<li>以<code>char[4]=&#39;#&#39;</code>为中心，同时向左右两边扩散，最多可以走四步左边到达边界，因此能扩散的最大步长为4，即<code>p[4]=4</code>。</li>
+<li>全部计算完成后的表格如下：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>char</th>
+<th>#</th>
+<th>a</th>
+<th>#</th>
+<th>b</th>
+<th>#</th>
+<th>b</th>
+<th>#</th>
+<th>a</th>
+<th>#</th>
+<th>b</th>
+<th>#</th>
+<th>b</th>
+<th>#</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>index</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+<td>11</td>
+<td>12</td>
+</tr>
+<tr>
+<td>p</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+<td>1</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h3 id="辅助数组p的结论"><a href="#辅助数组p的结论" class="headerlink" title="辅助数组p的结论"></a>辅助数组p的结论</h3><p>辅助数组p的最大值为5，对应原字符串<code>abbabb</code>的最长回文子串：<code>bbabb</code>。可以得出结论： <strong>辅助数组p的最大值即最长回文子串的长度</strong> 。因此可以在计算辅助数组p的过程中记录这个最大值，并且记录最长回文子串。</p>
+<h2 id="补充说明"><a href="#补充说明" class="headerlink" title="补充说明"></a>补充说明</h2><ol>
+<li><p>如果新回文子串的中心是一个字符，那么原始回文子串的中心也是一个字符，在新回文子串中，向两边扩散的特点是：“先分隔符，后字符”，同样扩散的步数因为有分隔符<code>#</code>的作用，在新字符串中每扩散两步，虽然实际上只扫到一个有效字符，但是相当于在原始字符串中相当于计算了两个字符。因为最后一定以分隔符结尾，还要计算一个，正好这个就可以把原始回文子串的中心算进去；<br><img src="https://pic.leetcode-cn.com/4ba4319f13bee429bb95ba119dcaefe71c9644bcf9e9be3ba2637d13fcccd3d6.jpg" alt=""></p>
+</li>
+<li><p>如果新回文子串的中心是<code>#</code>，那么原始回文子串的中心就是一个“空隙”。在新回文子串中，向两边扩散的特点是：“先字符，后分隔符”，扩散的步数因为有分隔符<code>#</code>的作用，在新字符串中每扩散两步，虽然实际上只扫到一个有效字符，但是相当于在原始字符串中相当于计算了两个字符。因此，“辅助数组 p 的最大值就是“最长回文子串”的长度”这个结论是成立的。<br><img src="https://pic.leetcode-cn.com/05e76869add71c1cbf396bb89ee5ad7f560cc6c5e60926ceaef00a3bbc32c9e4.jpg" alt=""></p>
+</li>
+</ol>
+<h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>时间复杂度：<code>O(N^2)</code><br>空间复杂度：<code>O(N)</code></p>
+<h2 id="Manacher算法改进"><a href="#Manacher算法改进" class="headerlink" title="Manacher算法改进"></a>Manacher算法改进</h2><h3 id="需要改进的情况"><a href="#需要改进的情况" class="headerlink" title="需要改进的情况"></a>需要改进的情况</h3><p>对新字符串每一个位置进行中心扩散会导致原始字符串的每一个字符被访问多次，一个比较极端的情况：<code>#a#a#a#a#a#a#a#a#</code>。</p>
+<p>Manacher改进了这种算法，使得在填写新的辅助数组p的值的时候，能够参考已经填写过的辅助数组p的值，使得新字符串每个字符只访问了一次，整体时间复杂度由<code>O(N^2)</code>改进到<code>O(N)</code>。</p>
+<h3 id="具体做法"><a href="#具体做法" class="headerlink" title="具体做法"></a>具体做法</h3><p>在遍历的过程中，除了循环变量i以外，还需要记录两个变量，<code>maxRight</code>和<code>center</code>。</p>
+<ul>
+<li><p><code>maxRight</code>：记录当前向右扩散的最大步长。</p>
+<ol>
+<li>得到一个<code>maxRight</code>所对应的回文子串并不一定是当前得到的最长回文子串，可能出现的情况：某个回文子串可能比较短但它正好在整个字符串比较靠后的位置；</li>
+<li><code>maxRight</code>的下一个位置可能是被程序看到的，停止的原因有2点：(1)左边界不能扩散导致右边界受限制也不能扩散，<code>maxRight</code>的下一个位置看不到；(2)正是因为看到了<code>maxRight</code>的下一个位置导致<code>maxRight</code>不能继续扩散。</li>
+<li>为什么<code>maxRight</code>很重要？因为扫描是从左往右的。</li>
+</ol>
+</li>
+<li><p><code>center</code>：是<code>maxRight</code>的回文中心的索引值。</p>
+<ol>
+<li><code>center</code>与<code>maxRight</code>一一对应，即一个<code>center</code>的值唯一对应了一个<code>maxRight</code>的值，因此两者必须同时更新。</li>
+</ol>
+</li>
+</ul>
+<h3 id="循环变量i与maxRight的关系"><a href="#循环变量i与maxRight的关系" class="headerlink" title="循环变量i与maxRight的关系"></a>循环变量<code>i</code>与<code>maxRight</code>的关系</h3><p><strong>情况 1：</strong> 当<code>i &gt;= maxRight</code>的时候，这就是一开始以及刚刚把一个回文子串扫描完的情况，此时只能够根据“中心扩散法”一个一个扫描，逐渐扩大<code>maxRight</code>；</p>
+<p><strong>情况 2：</strong> 当<code>i &lt; maxRight</code>的时候，根据新字符的回文子串的性质，循环变量关于<code>center</code>对称的那个索引（记为 <code>mirror</code>）的<code>p</code>值就很重要。</p>
+<p>我们先看<code>mirror</code>的值是多少，因为<code>center</code>是中心，<code>i</code>和 <code>mirror</code>关于<code>center</code>中心对称，因此<code>(mirror + i) / 2 = center</code>，所以<code>mirror = 2 * center - i</code>。</p>
+<p>根据<code>p[mirror]</code>的数值从小到大，具体可以分为如下 3 种情况：</p>
+<p><strong>情况 2(1)：</strong> <code>p[mirror]</code>的数值比较小，不超过<code>maxRight - i</code>。</p>
+<p>说明：<code>maxRight - i</code>的值，就是从<code>i</code>关于<code>center</code>的镜像点开始向左走（不包括它自己），到<code>maxRight</code>关于 <code>center</code>的镜像点的步数。<br><img src="https://pic.leetcode-cn.com/1fc56a2ecb6b67ccb5262b5cc3cfcff3041fdc0c6cd8cb0c329ef869644253a4.jpg" alt=""></p>
+<p>从图上可以看出，由于“以<code>center</code>为中心的回文子串”的对称性，导致了“以<code>i</code>为中心的回文子串”与“以<code>center</code>为中心的回文子串”也具有对称性，“以<code>i</code>为中心的回文子串”与“以 <code>center</code>为中心的回文子串”不能再扩散了，此时，直接把数值抄过来即可，即<code>p[i] = p[mirror]</code>。</p>
+<p><strong>情况 2(2)：</strong> <code>p[mirror]</code>的数值恰好等于<code>maxRight - i</code>。<br><img src="https://pic.leetcode-cn.com/74627724154804d8aa7062d1026ffeffa9f6202c1afb38603b91f7eb83eaec17.jpg" alt=""></p>
+<p>说明：仍然是依据“以<code>center</code>为中心的回文子串”的对称性，导致了“以<code>i</code>为中心的回文子串”与“以<code>center</code>为中心的回文子串”也具有对称性。</p>
+<p>因为靠左边的<code>f</code>与靠右边的<code>g</code>的原因，导致“以<code>center</code>为中心的回文子串”不能继续扩散；<br>但是“以<code>i</code>为中心的回文子串” 还可以继续扩散。<br>因此，可以先把<code>p[mirror]</code>的值抄过来，然后继续“中心扩散法”，继续增加<code>maxRight</code>。</p>
+<p><strong>情况 2(3)：</strong> <code>p[mirror]</code>的数值大于<code>maxRight - i</code>。<br><img src="https://pic.leetcode-cn.com/73ec2e14a7501999ccd6e60c77bd08415ccdf36fc6da4ab2f29311735a594e66.jpg" alt=""></p>
+<p>说明：仍然是依据“以<code>center</code>为中心的回文子串”的对称性，导致了“以<code>i</code>为中心的回文子串”与“以<code>center</code>为中心的回文子串”也具有对称性。<br>下面证明，<code>p[i] = maxRight - i</code>，证明的方法还是利用三个回文子串的对称性。<br><img src="https://pic.leetcode-cn.com/d404aff63ecd764aaa70e6bb961a7e4286b8b2afdb6b4ce4bf696fb8eeb55086.jpg" alt=""></p>
+<p>① 由于“以<code>center</code>为中心的回文子串”的对称性，黄色箭头对应的字符<code>c</code>和<code>e</code>一定不相等；</p>
+<p>② 由于“以<code>mirror</code>为中心的回文子串”的对称性，绿色箭头对应的字符<code>c</code>和<code>c</code>一定相等；</p>
+<p>③ 又由于“以<code>center</code>为中心的回文子串”的对称性，蓝色箭头对应的字符<code>c</code>和<code>c</code>一定相等；</p>
+<p>推出“以<code>i</code>为中心的回文子串”的对称性，红色箭头对应的字符<code>c</code>和<code>e</code>一定不相等。</p>
+<p>因此，<code>p[i] = maxRight - i</code>，不可能再大。事实上，可以使用反证法证明：</p>
+<p>如果“以<code>i</code>为中心的回文子串” 再向两边扩散的两个字符<code>c</code>和<code>e</code>相等，就能够推出黄色、绿色、蓝色、红色箭头所指向的 8 个变量的值都相等，此时“以<code>center</code>为中心的回文子串” 就可以再同时向左边和右边扩散 11 格，与<code>maxRight</code>的最大性矛盾。</p>
+<p>综合以上 3 种情况，当<code>i &lt; maxRight</code>的时候，<code>p[i]</code>可以参考<code>p[mirror]</code>的信息，以<code>maxRight - i</code>作为参考标准，<code>p[i]</code>的值应该是保守的，即二者之中较小的那个值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p[i] = min(maxRight - i, p[mirror]);</span><br></pre></td></tr></table></figure>
+
+<h2 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>时间复杂度：<code>O(N)</code><br>空间复杂度：<code>O(N)</code></p>
+
+  </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/Beking0912" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Manacher算法概要"><span class="toc-number">1.</span> <span class="toc-text">Manacher算法概要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Manacher算法具体流程"><span class="toc-number">2.</span> <span class="toc-text">Manacher算法具体流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步-对原始字符串进行预处理-添加分隔符"><span class="toc-number">2.1.</span> <span class="toc-text">第一步:对原始字符串进行预处理(添加分隔符)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步-计算辅助数组p"><span class="toc-number">2.2.</span> <span class="toc-text">第二步:计算辅助数组p</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#辅助数组p的结论"><span class="toc-number">2.3.</span> <span class="toc-text">辅助数组p的结论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充说明"><span class="toc-number">3.</span> <span class="toc-text">补充说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复杂度分析"><span class="toc-number">4.</span> <span class="toc-text">复杂度分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Manacher算法改进"><span class="toc-number">5.</span> <span class="toc-text">Manacher算法改进</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#需要改进的情况"><span class="toc-number">5.1.</span> <span class="toc-text">需要改进的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体做法"><span class="toc-number">5.2.</span> <span class="toc-text">具体做法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环变量i与maxRight的关系"><span class="toc-number">5.3.</span> <span class="toc-text">循环变量i与maxRight的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复杂度分析-1"><span class="toc-number">6.</span> <span class="toc-text">复杂度分析</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&text=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&title=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&is_video=false&description=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Manacher 马拉车不完全指北&body=Check out this article: http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&title=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&title=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&title=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&title=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&name=Manacher 马拉车不完全指北&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2020/01/17/Manacher-%E9%A9%AC%E6%8B%89%E8%BD%A6%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8C%97/&t=Manacher 马拉车不完全指北" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Beking
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/Beking0912" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/lib/style.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
