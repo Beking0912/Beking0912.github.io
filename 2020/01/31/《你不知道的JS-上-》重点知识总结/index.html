@@ -53,7 +53,7 @@ jQuery(document).ready(function($) {
 <meta property="og:description" content="阅读摘记《你不知道的JS(上)》 | 仅供学习   编译器将程序分解成词法单元 -&gt; 将词法单元解析成一个🌲结构   询问作用域：是否已存在该名称的变量？是，则忽略该声明；否，则声明一个新变量并命名。 询问作用域：是否已存在该名称的变量？是，则使用该变量；否，则继续查找   当变量出现在赋值操作的左侧时进行 LHS 查询(试图找到变量的容器本身)，否则进行 RHS 查询(查找某个变量的值">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-01-31T03:30:25.000Z">
-<meta property="article:modified_time" content="2020-01-31T07:11:13.182Z">
+<meta property="article:modified_time" content="2020-01-31T07:16:50.166Z">
 <meta property="article:author" content="Beking">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -287,55 +287,57 @@ jQuery(document).ready(function($) {
 <li>属性名必是字符串，可计算属性名可应用于 Symbol。</li>
 </ul>
 <ul>
-<li>Object.defineProperty(obj, ‘name’, {…}) 添加一个新属性或修改一个已有属性。</li>
-<li>常量：writable:false; configurable:false;</li>
-<li>Object.preventExtensions(…) 禁止向一个对象添加新属性。</li>
-<li>Object.seal(…) 密封，不可增删，不可重新配置，可以修改。</li>
-<li>Object.freeze(…) 冻结，不可增删改，不可重新配置，是最高的不可变性。</li>
+<li><code>Object.defineProperty(obj, &#39;name&#39;, {})</code> 添加一个新属性或修改一个已有属性。</li>
+<li>常量：<code>writable:false; configurable:false;</code></li>
+<li><code>Object.preventExtensions()</code> 禁止向一个对象添加新属性。</li>
+<li><code>Object.seal()</code> 密封，不可增删，不可重新配置，可以修改。</li>
+<li><code>Object.freeze()</code> 冻结，不可增删改，不可重新配置，是最高的不可变性。</li>
 </ul>
 <ul>
 <li>区分属性是否可枚举：</li>
 </ul>
 <ol>
-<li>propertyIsEnumerable 只检查对象，不检查原型链，enumerable:true。</li>
-<li>Object.keys 返回数组，包含所有可枚举属性，只对象。</li>
-<li>Object.getOwnPropertyNames 返回数组，包含所有属性，无论是否可枚举，只对象。</li>
-<li>in 检查对象和原型链。</li>
-<li>hasOwnProperty 只检查对象。</li>
+<li><code>propertyIsEnumerable</code> 只检查对象，不检查原型链，enumerable:true。</li>
+<li><code>Object.keys</code> 返回数组，包含所有可枚举属性，只对象。</li>
+<li><code>Object.getOwnPropertyNames</code> 返回数组，包含所有属性，无论是否可枚举，只对象。</li>
+<li><code>in</code> 检查对象和原型链。</li>
+<li><code>hasOwnProperty</code> 只检查对象。</li>
 </ol>
 <ul>
-<li>in 和 hasOwnProperty 的区别：是否检查原型链。</li>
+<li><code>in</code> 和 <code>hasOwnProperty</code> 的区别： <strong>是否检查原型链</strong> 。</li>
 </ul>
 <ul>
 <li>迭代器：</li>
+</ul>
+<ol>
 <li>for-in 遍历对象的可枚举属性列表(包括原型链)。</li>
 <li>forEach 遍历数组中所有值并忽略回调函数的返回值。</li>
 <li>for-of 遍历有 iterator 的对象。</li>
-</ul>
+</ol>
 <ul>
-<li>面向对象：封装、继承、多态。</li>
+<li>面向对象：<strong>封装、继承、多态</strong> 。</li>
 <li>多态(在继承链的不同层次名称相同但是功能不同的函数)，在继承链的不同层次中的一个方法可以被多次定义。</li>
 <li>super 可以直接调用父类的构造函数。</li>
 <li>类的继承其实是复制。</li>
 </ul>
 <ul>
-<li>所有普通对象都有内置的 Object.prototype，指向原型链的顶端。所有普通的原型链最终都会指向内置的 Object.prototype。</li>
+<li>所有普通对象都有内置的 Object.prototype，指向原型链的顶端。<strong>所有普通的原型链最终都会指向内置的 Object.prototype</strong> 。</li>
 <li>屏蔽属性：只读属性会阻止原型链下层隐式创建同名属性(为了模拟类属性的继承)。</li>
 <li>new Foo() 并没有直接创建关联，只是间接完成了一个关联到其他对象的新对象。</li>
-<li>继承：意味着复制。JS 默认并不会复制对象属性，而是会在两个对象之间创建一个关联，这样一个对象就可以通过委托访问另一个对象的属性和函数。</li>
-<li>new 会劫持所有普通函数并用构造对象的形式来调用它，成为构造函数调用。</li>
+<li>继承：意味着复制。<strong>JS 默认并不会复制对象属性，而是会在两个对象之间创建一个关联，这样一个对象就可以通过委托访问另一个对象的属性和函数</strong> 。</li>
+<li><strong>new 会劫持所有普通函数并用构造对象的形式来调用它，成为构造函数调用</strong> 。</li>
 </ul>
 <ul>
-<li>Object.create(a) 以 a 为原型创建一个对象、创建一个新的对象并将它关联到 a。</li>
-<li>Object.create 的唯一缺点：不能直接修改已有的默认对象。</li>
-<li>Object.setPropertyOf() 直接修改现有的某个原型。</li>
-<li>a instanceOf b 在 a 的原型链上是否有 a.prototype 指向的对象。</li>
-<li>b.isPrototypeOf(c) b 是否出现在 c 的原型链上。</li>
-<li>Object.getPrototypeOf(a) 直接获取一个对象的原型链。</li>
-<li>Object.create(null) 会创建一个拥有空原型的对象，无法委托，没有原型链。</li>
+<li><code>Object.create(a)</code> 以 a 为原型创建一个对象、创建一个新的对象并将它关联到 a。</li>
+<li><code>Object.create</code> 的唯一缺点：不能直接修改已有的默认对象。</li>
+<li><code>Object.setPropertyOf()</code> 直接修改现有的某个原型。</li>
+<li><code>a instanceOf b</code> 在 a 的原型链上是否有 a.prototype 指向的对象。</li>
+<li><code>b.isPrototypeOf(c)</code> b 是否出现在 c 的原型链上。</li>
+<li><code>Object.getPrototypeOf(a)</code> 直接获取一个对象的原型链。</li>
+<li><code>Object.create(null)</code> 会创建一个拥有空原型的对象，无法委托，没有原型链。</li>
 </ul>
 <ul>
-<li>要访问对象中不存在的一个属性时，[[Get]] 就会查找对象内部原型关联的对象。此关联关系定义了一条原型链，在查找时对它进行遍历。</li>
+<li><strong>要访问对象中不存在的一个属性时，[[Get]] 就会查找对象内部原型关联的对象。此关联关系定义了一条原型链，在查找时对它进行遍历</strong> 。</li>
 </ul>
 <ul>
 <li>委托行为：某些对象在找不到属性或方法引用时会把请求委托给另一个对象。</li>
@@ -344,7 +346,7 @@ jQuery(document).ready(function($) {
 </ul>
 <ul>
 <li>class 基本是现有的委托机制的语法糖，不是静态复制。</li>
-<li>可以通过 super 来实现相对多态，任何方法都可以引用原型链上层的同名方法。</li>
+<li><strong>可以通过 super 来实现相对多态，任何方法都可以引用原型链上层的同名方法</strong> 。</li>
 <li>super 是在声明时静态绑定的，并非动态绑定。</li>
 <li>super 并不像 this 一样是动态绑定，而是在创建时静态绑定。</li>
 </ul>
