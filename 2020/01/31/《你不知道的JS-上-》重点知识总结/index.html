@@ -53,7 +53,7 @@ jQuery(document).ready(function($) {
 <meta property="og:description" content="阅读摘记《你不知道的JS(上)》 | 仅供学习   编译器将程序分解成词法单元 -&gt; 将词法单元解析成一个🌲结构   询问作用域：是否已存在该名称的变量？是，则忽略该声明；否，则声明一个新变量并命名。 询问作用域：是否已存在该名称的变量？是，则使用该变量；否，则继续查找   当变量出现在赋值操作的左侧时进行 LHS 查询(试图找到变量的容器本身)，否则进行 RHS 查询(查找某个变量的值">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-01-31T03:30:25.000Z">
-<meta property="article:modified_time" content="2020-01-31T05:49:18.761Z">
+<meta property="article:modified_time" content="2020-01-31T07:11:13.182Z">
 <meta property="article:author" content="Beking">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -274,21 +274,79 @@ jQuery(document).ready(function($) {
 <li>箭头函数：继承父作用域的 this，相当于 self=this 的作用。</li>
 </ol>
 <ul>
-<li><p>new 的过程：<strong>构建一个全新的对象 -&gt; 新对象执行 [[prototype]] 连接 -&gt; 新对象绑定到函数调用的 this -&gt; 返回此新对象</strong></p>
-</li>
-<li><p>装箱：传入一个原始值作为 this 的绑定对象时，原始值 -&gt; 包装类型。</p>
-</li>
-<li><p>bind：<strong>创建一个新的包装函数，忽略当前的 this 绑定，把对象绑定到 this 上。</strong></p>
-</li>
-<li><p>内置对象：String, Number, Boolean, Object, Function, Array, Date, RegExp, Error。</p>
-</li>
-<li><p>判断类型：typeof, instanceof, Object.prototype.toString.call()</p>
-</li>
-<li><p>null 和 undefined 和 Date 无构造形式，仅文字形式。</p>
-</li>
-<li><p>属性名必是字符串，可计算属性名可应用于 Symbol。</p>
-</li>
-<li></li>
+<li>new 的过程：<strong>构建一个全新的对象 -&gt; 新对象执行 [[prototype]] 连接 -&gt; 新对象绑定到函数调用的 this -&gt; 返回此新对象</strong></li>
+<li>装箱：传入一个原始值作为 this 的绑定对象时，原始值 -&gt; 包装类型。</li>
+<li>bind：<strong>创建一个新的包装函数，忽略当前的 this 绑定，把对象绑定到 this 上。</strong></li>
+</ul>
+<ul>
+<li>内置对象：String, Number, Boolean, Object, Function, Array, Date, RegExp, Error。</li>
+<li>判断类型：typeof, instanceOf, Object.prototype.toString.call()</li>
+</ul>
+<ul>
+<li>null 和 undefined 和 Date 无构造形式，仅文字形式。</li>
+<li>属性名必是字符串，可计算属性名可应用于 Symbol。</li>
+</ul>
+<ul>
+<li>Object.defineProperty(obj, ‘name’, {…}) 添加一个新属性或修改一个已有属性。</li>
+<li>常量：writable:false; configurable:false;</li>
+<li>Object.preventExtensions(…) 禁止向一个对象添加新属性。</li>
+<li>Object.seal(…) 密封，不可增删，不可重新配置，可以修改。</li>
+<li>Object.freeze(…) 冻结，不可增删改，不可重新配置，是最高的不可变性。</li>
+</ul>
+<ul>
+<li>区分属性是否可枚举：</li>
+</ul>
+<ol>
+<li>propertyIsEnumerable 只检查对象，不检查原型链，enumerable:true。</li>
+<li>Object.keys 返回数组，包含所有可枚举属性，只对象。</li>
+<li>Object.getOwnPropertyNames 返回数组，包含所有属性，无论是否可枚举，只对象。</li>
+<li>in 检查对象和原型链。</li>
+<li>hasOwnProperty 只检查对象。</li>
+</ol>
+<ul>
+<li>in 和 hasOwnProperty 的区别：是否检查原型链。</li>
+</ul>
+<ul>
+<li>迭代器：</li>
+<li>for-in 遍历对象的可枚举属性列表(包括原型链)。</li>
+<li>forEach 遍历数组中所有值并忽略回调函数的返回值。</li>
+<li>for-of 遍历有 iterator 的对象。</li>
+</ul>
+<ul>
+<li>面向对象：封装、继承、多态。</li>
+<li>多态(在继承链的不同层次名称相同但是功能不同的函数)，在继承链的不同层次中的一个方法可以被多次定义。</li>
+<li>super 可以直接调用父类的构造函数。</li>
+<li>类的继承其实是复制。</li>
+</ul>
+<ul>
+<li>所有普通对象都有内置的 Object.prototype，指向原型链的顶端。所有普通的原型链最终都会指向内置的 Object.prototype。</li>
+<li>屏蔽属性：只读属性会阻止原型链下层隐式创建同名属性(为了模拟类属性的继承)。</li>
+<li>new Foo() 并没有直接创建关联，只是间接完成了一个关联到其他对象的新对象。</li>
+<li>继承：意味着复制。JS 默认并不会复制对象属性，而是会在两个对象之间创建一个关联，这样一个对象就可以通过委托访问另一个对象的属性和函数。</li>
+<li>new 会劫持所有普通函数并用构造对象的形式来调用它，成为构造函数调用。</li>
+</ul>
+<ul>
+<li>Object.create(a) 以 a 为原型创建一个对象、创建一个新的对象并将它关联到 a。</li>
+<li>Object.create 的唯一缺点：不能直接修改已有的默认对象。</li>
+<li>Object.setPropertyOf() 直接修改现有的某个原型。</li>
+<li>a instanceOf b 在 a 的原型链上是否有 a.prototype 指向的对象。</li>
+<li>b.isPrototypeOf(c) b 是否出现在 c 的原型链上。</li>
+<li>Object.getPrototypeOf(a) 直接获取一个对象的原型链。</li>
+<li>Object.create(null) 会创建一个拥有空原型的对象，无法委托，没有原型链。</li>
+</ul>
+<ul>
+<li>要访问对象中不存在的一个属性时，[[Get]] 就会查找对象内部原型关联的对象。此关联关系定义了一条原型链，在查找时对它进行遍历。</li>
+</ul>
+<ul>
+<li>委托行为：某些对象在找不到属性或方法引用时会把请求委托给另一个对象。</li>
+<li>委托行为认为对象之间是兄弟关系，互相委托。</li>
+<li>原型机制本质上是行为委托机制，对象间兄弟关系。</li>
+</ul>
+<ul>
+<li>class 基本是现有的委托机制的语法糖，不是静态复制。</li>
+<li>可以通过 super 来实现相对多态，任何方法都可以引用原型链上层的同名方法。</li>
+<li>super 是在声明时静态绑定的，并非动态绑定。</li>
+<li>super 并不像 this 一样是动态绑定，而是在创建时静态绑定。</li>
 </ul>
 
   </div>
