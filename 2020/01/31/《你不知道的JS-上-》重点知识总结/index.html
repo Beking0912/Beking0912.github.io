@@ -53,7 +53,7 @@ jQuery(document).ready(function($) {
 <meta property="og:description" content="编译器将程序分解成词法单元 -&gt; 将词法单元解析成一个🌲结构   询问作用域：是否已存在该名称的变量？是，则忽略该声明；否，则声明一个新变量并命名。 询问作用域：是否已存在该名称的变量？是，则使用该变量；否，则继续查找   当变量出现在赋值操作的左侧时进行 LHS 查询(试图找到变量的容器本身)，否则进行 RHS 查询(查找某个变量的值)。 不成功的 LHS 引用：自动隐式创建一个全局变">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-01-31T03:30:25.000Z">
-<meta property="article:modified_time" content="2020-01-31T05:14:07.607Z">
+<meta property="article:modified_time" content="2020-01-31T05:18:48.893Z">
 <meta property="article:author" content="Beking">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -207,21 +207,31 @@ jQuery(document).ready(function($) {
 <li>不成功的 LHS 引用：自动隐式创建一个全局变量，严格模式下 ReferenceError。</li>
 <li>不成功的 RHS 引用：ReferenceError。</li>
 <li>严格模式下禁止自动或隐式创建全局变量。</li>
+</ul>
+<ul>
 <li>作用域查找会在 <strong>找到第一个匹配的标识符时</strong> 停止(由内而外)。</li>
 <li>遮蔽效应：在多层的嵌套作用域中可以定义同名的标识符，内部遮蔽外部。</li>
 <li>函数的词法作用域只由这 <strong>函数被声明时所处位置</strong> 决定。</li>
+</ul>
+<ul>
 <li>欺骗词法作用域(使用 eval 或 with)会导致性能下降。</li>
 <li>eval() 用于执行动态创建的代码，可以在运行期修改书写期的词法作用域。</li>
 <li>eval() 若 <strong>接受了一个或多个声明代码</strong> ，则会修改其所处的词法作用域。</li>
 <li>严格模式下，eval() 在运行时有自己的词法作用域，其中的声明无法修改所在作用域。类似的还有：setTimeout(), setInterval(), new Function()等。</li>
 <li>with 用于重复引用同一个对象中的多个属性，可以将一个没有或有多个属性的对象处理为一个 <strong>完全隔离</strong> 的词法作用域。</li>
 <li>with 声明会根据传递的对象 <strong>凭空创建一个全新的词法作用域</strong> 。</li>
+</ul>
+<ul>
 <li>函数声明和函数表达式的区别： <strong>名称标识符绑定处</strong> 不同。</li>
 <li>函数声明不可忽略函数名，函数表达式可以匿名。</li>
 <li>匿名函数表达式缺点：调试困难；只能通过已过期的 arguments.callee 引用自身；可读性差。</li>
+</ul>
+<ul>
 <li>临时性死区：let 声明不会在块作用域中提升，声明的代码被运行前声明并不存在。可以避免全局污染，有利于垃圾回收。</li>
 <li>提升：变量和函数声明从它们在代码中出现的位置提升到顶部。所有声明会在任何代码被执行前首先被处理。</li>
-<li>函数优先提升，其次是变量。重复声明忽略，重复函数覆盖前面的。</li>
+<li><strong>函数优先提升，其次是变量</strong>。重复声明忽略，重复函数覆盖前面的。</li>
+</ul>
+<ul>
 <li>for(let i = 0;;) for 循环头部的 let 不仅将 i 绑定到了 for 循环的块中，事实上它将 i 重新绑定到了循环的每一个迭代中。</li>
 <li>闭包优点：</li>
 </ul>
