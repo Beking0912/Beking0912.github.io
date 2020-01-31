@@ -45,15 +45,15 @@ jQuery(document).ready(function($) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="编译器将程序分解成词法单元 -&gt; 将词法单元解析成一个🌲结构   询问作用域：是否已存在该名称的变量？是，则忽略该声明；否，则声明一个新变量并命名。 询问作用域：是否已存在该名称的变量？是，则使用该变量；否，则继续查找   当变量出现在赋值操作的左侧时进行 LHS 查询(试图找到变量的容器本身)，否则进行 RHS 查询(查找某个变量的值)。 不成功的 LHS 引用：自动隐式创建一个全局变">
+    <meta name="description" content="阅读摘记《你不知道的JS(上)》 | 仅供学习   编译器将程序分解成词法单元 -&gt; 将词法单元解析成一个🌲结构   询问作用域：是否已存在该名称的变量？是，则忽略该声明；否，则声明一个新变量并命名。 询问作用域：是否已存在该名称的变量？是，则使用该变量；否，则继续查找   当变量出现在赋值操作的左侧时进行 LHS 查询(试图找到变量的容器本身)，否则进行 RHS 查询(查找某个变量的值">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《你不知道的JS(上)》重点知识总结">
 <meta property="og:url" content="http://yoursite.com/2020/01/31/%E3%80%8A%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS-%E4%B8%8A-%E3%80%8B%E9%87%8D%E7%82%B9%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="Beking&#39;s notebook">
-<meta property="og:description" content="编译器将程序分解成词法单元 -&gt; 将词法单元解析成一个🌲结构   询问作用域：是否已存在该名称的变量？是，则忽略该声明；否，则声明一个新变量并命名。 询问作用域：是否已存在该名称的变量？是，则使用该变量；否，则继续查找   当变量出现在赋值操作的左侧时进行 LHS 查询(试图找到变量的容器本身)，否则进行 RHS 查询(查找某个变量的值)。 不成功的 LHS 引用：自动隐式创建一个全局变">
+<meta property="og:description" content="阅读摘记《你不知道的JS(上)》 | 仅供学习   编译器将程序分解成词法单元 -&gt; 将词法单元解析成一个🌲结构   询问作用域：是否已存在该名称的变量？是，则忽略该声明；否，则声明一个新变量并命名。 询问作用域：是否已存在该名称的变量？是，则使用该变量；否，则继续查找   当变量出现在赋值操作的左侧时进行 LHS 查询(试图找到变量的容器本身)，否则进行 RHS 查询(查找某个变量的值">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-01-31T03:30:25.000Z">
-<meta property="article:modified_time" content="2020-01-31T05:18:48.893Z">
+<meta property="article:modified_time" content="2020-01-31T05:49:18.761Z">
 <meta property="article:author" content="Beking">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -195,7 +195,10 @@ jQuery(document).ready(function($) {
   
 
   <div class="content" itemprop="articleBody">
-    <ul>
+    <blockquote>
+<p>阅读摘记《你不知道的JS(上)》 | 仅供学习</p>
+</blockquote>
+<ul>
 <li>编译器将程序分解成词法单元 -&gt; 将词法单元解析成一个🌲结构</li>
 </ul>
 <ol>
@@ -224,16 +227,68 @@ jQuery(document).ready(function($) {
 <ul>
 <li>函数声明和函数表达式的区别： <strong>名称标识符绑定处</strong> 不同。</li>
 <li>函数声明不可忽略函数名，函数表达式可以匿名。</li>
-<li>匿名函数表达式缺点：调试困难；只能通过已过期的 arguments.callee 引用自身；可读性差。</li>
+<li>匿名函数表达式缺点：调试困难；只能通过已弃用的 arguments.callee 引用自身；可读性差。</li>
 </ul>
 <ul>
 <li>临时性死区：let 声明不会在块作用域中提升，声明的代码被运行前声明并不存在。可以避免全局污染，有利于垃圾回收。</li>
 <li>提升：变量和函数声明从它们在代码中出现的位置提升到顶部。所有声明会在任何代码被执行前首先被处理。</li>
-<li><strong>函数优先提升，其次是变量</strong>。重复声明忽略，重复函数覆盖前面的。</li>
+<li><strong>函数优先提升，其次是变量。重复声明忽略，重复函数覆盖前面的。</strong></li>
 </ul>
 <ul>
 <li>for(let i = 0;;) for 循环头部的 let 不仅将 i 绑定到了 for 循环的块中，事实上它将 i 重新绑定到了循环的每一个迭代中。</li>
 <li>闭包优点：</li>
+</ul>
+<ol>
+<li><strong>可以让变量保存在内存中，不被垃圾回收机制清除。</strong></li>
+<li><strong>可以避免变量的全局污染</strong> 。</li>
+<li><strong>可以定义模块，将操作函数暴露到外部，细节隐藏在内部。</strong></li>
+</ol>
+<ul>
+<li>闭包缺点：</li>
+</ul>
+<ol>
+<li><strong>易造成内存泄漏。</strong></li>
+<li><strong>闭包会降低性能。</strong></li>
+</ol>
+<ul>
+<li><strong>当函数可以记住并访问所在的词法作用域</strong> 时，就产生了闭包。</li>
+<li>只要 <strong>使用了回调函数</strong> 就是在使用闭包，例如：定时器，事件监听器，ajax请求，IIFE，跨窗口通信等。</li>
+</ul>
+<ul>
+<li>延迟函数的回调会在循环结束时执行。</li>
+<li>循环中的函数是 <strong>在各个迭代中分别定义的</strong> ，但都被封闭在一个共享的全局作用域中，即所有函数共享一个 i 的引用。</li>
+<li>IIFE 会使每个迭代都生成一个新的作用域，使延迟函数的回调可以将新的作用域封闭在每个迭代内部。</li>
+<li>动态作用域不关心函数和作用域如何声明、何处声明，只关心从何处调用。</li>
+<li>词法作用域：声明处；动态作用域：调用处。</li>
+</ul>
+<ul>
+<li>this 在任何情况下都不指向函数的词法作用域。</li>
+<li>this 是在函数被调用时发生绑定，指向完全取决于调用处。</li>
+<li>this 的绑定规则：</li>
+</ul>
+<ol>
+<li>默认绑定：非严格模式下默认绑定在全局对象，严格模式下 undefined。</li>
+<li>隐式绑定：调用位置是否有上下文，被隐式绑定的函数会丢失绑定的对象，就上一层调用位置起作用。</li>
+<li>显式绑定：硬绑定(call，bind，apply，forEach)，硬绑定后不可能再改变它的 this。软绑定(softBind)，保留隐式绑定或是显式绑定修改 this 的能力。</li>
+<li>new 绑定：调用者绑定。</li>
+<li>箭头函数：继承父作用域的 this，相当于 self=this 的作用。</li>
+</ol>
+<ul>
+<li><p>new 的过程：<strong>构建一个全新的对象 -&gt; 新对象执行 [[prototype]] 连接 -&gt; 新对象绑定到函数调用的 this -&gt; 返回此新对象</strong></p>
+</li>
+<li><p>装箱：传入一个原始值作为 this 的绑定对象时，原始值 -&gt; 包装类型。</p>
+</li>
+<li><p>bind：<strong>创建一个新的包装函数，忽略当前的 this 绑定，把对象绑定到 this 上。</strong></p>
+</li>
+<li><p>内置对象：String, Number, Boolean, Object, Function, Array, Date, RegExp, Error。</p>
+</li>
+<li><p>判断类型：typeof, instanceof, Object.prototype.toString.call()</p>
+</li>
+<li><p>null 和 undefined 和 Date 无构造形式，仅文字形式。</p>
+</li>
+<li><p>属性名必是字符串，可计算属性名可应用于 Symbol。</p>
+</li>
+<li></li>
 </ul>
 
   </div>
