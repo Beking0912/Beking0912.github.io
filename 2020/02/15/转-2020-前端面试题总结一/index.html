@@ -53,7 +53,7 @@ jQuery(document).ready(function($) {
 <meta property="og:description" content="原文地址 | 来自掘金 | 仅供学习  面试总结 重视基础和原理 重视基础和原理 重视基础和原理  一面原型构造函数是一种特殊的方法，主要用来在创建对象时初始化对象。每个构造函数都有prototype(原型)(箭头函数以及Function.prototype.bind()没有)属性，这个prototype(原型)属性是一个指针，指向一个对象，这个对象的用途是包含特定类型的所有实例共享的属性和方法">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-02-15T08:03:30.000Z">
-<meta property="article:modified_time" content="2020-02-15T08:45:05.685Z">
+<meta property="article:modified_time" content="2020-02-15T08:48:08.144Z">
 <meta property="article:author" content="Beking">
 <meta property="article:tag" content="面试题">
 <meta name="twitter:card" content="summary">
@@ -244,7 +244,8 @@ jQuery(document).ready(function($) {
 <li>UglifyJsPlugin：现在也不需要使用这个plugin了，只需要使用optimization.minimize为true就行，production mode下面自动为true。</li>
 </ol>
 <p>optimization.minimizer可以配置你自己的压缩程序</p>
-<h1 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h1><h2 id="陈述输入URL回车后的过程"><a href="#陈述输入URL回车后的过程" class="headerlink" title="陈述输入URL回车后的过程"></a>陈述输入URL回车后的过程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">1.读取缓存： </span><br><span class="line">        搜索自身的 DNS 缓存。(如果 DNS 缓存中找到IP 地址就跳过了接下来查找 IP 地址步骤，直接访问该 IP 地址。)</span><br><span class="line">2.DNS 解析:将域名解析成 IP 地址</span><br><span class="line">3.TCP 连接：TCP 三次握手，简易描述三次握手</span><br><span class="line">           客户端：服务端你在么？ </span><br><span class="line">           服务端：客户端我在，你要连接我么？ </span><br><span class="line">           客户端：是的服务端，我要链接。 </span><br><span class="line">           连接打通，可以开始请求来</span><br><span class="line">4.发送 HTTP 请求</span><br><span class="line">5.服务器处理请求并返回 HTTP 报文</span><br><span class="line">6.浏览器解析渲染页面</span><br><span class="line">7.断开连接：TCP 四次挥手</span><br><span class="line"></span><br><span class="line">关于第六步浏览器解析渲染页面又可以聊聊如果返回的是html页面</span><br><span class="line">根据 HTML 解析出 DOM 树</span><br><span class="line">根据 CSS 解析生成 CSS 规则树</span><br><span class="line">结合 DOM 树和 CSS 规则树，生成渲染树</span><br><span class="line">根据渲染树计算每一个节点的信息</span><br><span class="line">根据计算好的信息绘制页面</span><br></pre></td></tr></table></figure>
+<h1 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h1><h2 id="陈述输入URL回车后的过程"><a href="#陈述输入URL回车后的过程" class="headerlink" title="陈述输入URL回车后的过程"></a>陈述输入URL回车后的过程</h2><p>1.读取缓存：<br>        搜索自身的 DNS 缓存。(如果 DNS 缓存中找到IP 地址就跳过了接下来查找 IP 地址步骤，直接访问该 IP 地址。)<br>2.DNS 解析:将域名解析成 IP 地址<br>3.TCP 连接：TCP 三次握手，简易描述三次握手<br>           客户端：服务端你在么？<br>           服务端：客户端我在，你要连接我么？<br>           客户端：是的服务端，我要链接。<br>           连接打通，可以开始请求来<br>4.发送 HTTP 请求<br>5.服务器处理请求并返回 HTTP 报文<br>6.浏览器解析渲染页面<br>7.断开连接：TCP 四次挥手</p>
+<p>关于第六步浏览器解析渲染页面又可以聊聊如果返回的是html页面<br>根据 HTML 解析出 DOM 树<br>根据 CSS 解析生成 CSS 规则树<br>结合 DOM 树和 CSS 规则树，生成渲染树<br>根据渲染树计算每一个节点的信息<br>根据计算好的信息绘制页面</p>
 <h2 id="陈述http"><a href="#陈述http" class="headerlink" title="陈述http"></a>陈述http</h2><ol>
 <li><p>基本概念：<br>HTTP，全称为 HyperText Transfer Protocol，即为超文本传输协议。是互联网应用最为广泛的一种网络协议。<br>所有的 www 文件都必须遵守这个标准。</p>
 </li>
@@ -253,9 +254,7 @@ jQuery(document).ready(function($) {
 <li><p>http请求：<br>HTTP 定义了在与服务器交互的不同方式，最常用的方法有 4 种。<br>分别是 GET，POST，PUT， DELETE。URL 全称为资源描述符，可以这么认为：一个 URL 地址。<br>对应着一个网络上的资源，而 HTTP 中的 GET，POST，PUT，DELETE<br>就对应着对这个资源的查询，修改，增添，删除4个操作。</p>
 </li>
 </ol>
-<p>HTTP 请求由 3 个部分构成，分别是：状态行，请求头(Request Header)，请求正文。</p>
-<p>HTTP 响应由 3 个部分构成，分别是：状态行，响应头(Response Header)，响应正文。</p>
-<p>HTTP 响应中包含一个状态码，用来表示服务器对客户端响应的结果。</p>
+<p>HTTP 请求由 3 个部分构成，分别是：状态行，请求头(Request Header)，请求正文。<br>HTTP 响应由 3 个部分构成，分别是：状态行，响应头(Response Header)，响应正文。<br>HTTP 响应中包含一个状态码，用来表示服务器对客户端响应的结果。</p>
 <ol start="4">
 <li>状态码一般由3位构成：<br>1xx : 表示请求已经接受了，继续处理。<br>2xx : 表示请求已经处理掉了。<br>3xx : 重定向。<br>4xx : 一般表示客户端有错误，请求无法实现。<br>5xx : 一般为服务器端的错误。</li>
 </ol>
@@ -298,12 +297,12 @@ jQuery(document).ready(function($) {
 <h2 id="说一说前端性能优化方案"><a href="#说一说前端性能优化方案" class="headerlink" title="说一说前端性能优化方案"></a>说一说前端性能优化方案</h2><p>三个方面来说明前端性能优化<br>一： webapck优化与开启gzip压缩<br>    1.babel-loader用 include 或 exclude 来帮我们避免不必要的转译，不转译node_moudules中的js文件<br>    其次在缓存当前转译的js文件，设置loader: ‘babel-loader?cacheDirectory=true’<br>    2.文件采用按需加载等等<br>    3.具体的做法非常简单，只需要你在你的 request headers 中加上这么一句：<br>    accept-encoding:gzip<br>    4.图片优化，采用svg图片或者字体图标<br>    5.浏览器缓存机制，它又分为强缓存和协商缓存<br>二：本地存储——从 Cookie 到 Web Storage、IndexedDB<br>    说明一下SessionStorage和localStorage还有cookie的区别和优缺点<br>三：代码优化<br>    1.事件代理<br>    2.事件的节流和防抖<br>    3.页面的回流和重绘<br>    4.EventLoop事件循环机制<br>    5.代码优化等等</p>
 <h2 id="说一说SessionStorage和localStorage还有cookie"><a href="#说一说SessionStorage和localStorage还有cookie" class="headerlink" title="说一说SessionStorage和localStorage还有cookie"></a>说一说SessionStorage和localStorage还有cookie</h2><p>共同点：都是保存在浏览器端、且同源的<br>不同点：<br>    1.cookie数据始终在同源的http请求中携带（即使不需要），即cookie在浏览器和服务器间来回传递。<br>    cookie数据还有路径（path）的概念，可以限制cookie只属于某个路径下<br>    sessionStorage和localStorage不会自动把数据发送给服务器，仅在本地保存。<br>    2.存储大小限制也不同，cookie数据不能超过4K，sessionStorage和localStorage可以达到5M<br>    3.sessionStorage：仅在当前浏览器窗口关闭之前有效；<br>    localStorage：始终有效，窗口或浏览器关闭也一直保存，本地存储，因此用作持久数据；<br>    cookie：只在设置的cookie过期时间之前有效，即使窗口关闭或浏览器关闭<br>    4.作用域不同<br>    sessionStorage：不在不同的浏览器窗口中共享，即使是同一个页面；<br>    localstorage：在所有同源窗口中都是共享的；也就是说只要浏览器不关闭，数据仍然存在<br>    cookie: 也是在所有同源窗口中都是共享的.也就是说只要浏览器不关闭，数据仍然存在</p>
 <h2 id="说一说你用过的css布局"><a href="#说一说你用过的css布局" class="headerlink" title="说一说你用过的css布局"></a>说一说你用过的css布局</h2><p>gird布局，layout布局，flex布局，双飞翼，圣杯布局等</p>
-<h2 id="Promise是什么，解决了什么，之前怎么实现的"><a href="#Promise是什么，解决了什么，之前怎么实现的" class="headerlink" title="Promise是什么，解决了什么，之前怎么实现的"></a>Promise是什么，解决了什么，之前怎么实现的</h2><pre><code>Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。
-解决来之前在请求中回调请求产生的回调地狱，使得现在的代码更加合理更加优雅，也更加容易定位查找问题。</code></pre><h2 id="说说浏览器缓存"><a href="#说说浏览器缓存" class="headerlink" title="说说浏览器缓存"></a>说说浏览器缓存</h2><p>缓存可以减少网络 IO 消耗，提高访问速度。浏览器缓存是一种操作简单、效果显著的前端性能优化手段<br>很多时候，大家倾向于将浏览器缓存简单地理解为“HTTP 缓存”。<br>但事实上，浏览器缓存机制有四个方面，它们按照获取资源时请求的优先级依次排列如下：</p>
+<h2 id="Promise是什么，解决了什么，之前怎么实现的"><a href="#Promise是什么，解决了什么，之前怎么实现的" class="headerlink" title="Promise是什么，解决了什么，之前怎么实现的"></a>Promise是什么，解决了什么，之前怎么实现的</h2><p>Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。<br>解决来之前在请求中回调请求产生的回调地狱，使得现在的代码更加合理更加优雅，也更加容易定位查找问题。</p>
+<h2 id="说说浏览器缓存"><a href="#说说浏览器缓存" class="headerlink" title="说说浏览器缓存"></a>说说浏览器缓存</h2><p>缓存可以减少网络 IO 消耗，提高访问速度。浏览器缓存是一种操作简单、效果显著的前端性能优化手段<br>很多时候，大家倾向于将浏览器缓存简单地理解为“HTTP 缓存”。<br>但事实上，浏览器缓存机制有四个方面，它们按照获取资源时请求的优先级依次排列如下：</p>
 <p>Memory Cache &gt; Service Worker Cache &gt; HTTP Cache &gt; Push Cache</p>
-<p>缓存它又分为强缓存和协商缓存。优先级较高的是强缓存，在命中强缓存失败的情况下，才会走协商缓存<br>    实现强缓存，过去我们一直用 expires。<br>    当服务器返回响应时，在 Response Headers 中将过期时间写入 expires 字段，现在一般使用Cache-Control 两者同时出现使用Cache-Control </p>
-<pre><code>协商缓存，Last-Modified 是一个时间戳，如果我们启用了协商缓存，它会在首次请求时随着 Response Headers 返回：每次请求去判断这个时间戳是否发生变化。
-从而去决定你是304读取缓存还是给你返回最新的数据</code></pre>
+<p>缓存它又分为强缓存和协商缓存。优先级较高的是强缓存，在命中强缓存失败的情况下，才会走协商缓存<br>实现强缓存，过去我们一直用 expires。<br>当服务器返回响应时，在 Response Headers 中将过期时间写入 expires 字段，现在一般使用Cache-Control 两者同时出现使用Cache-Control </p>
+<p>协商缓存，Last-Modified 是一个时间戳，如果我们启用了协商缓存，它会在首次请求时随着 Response Headers 返回：每次请求去判断这个时间戳是否发生变化。从而去决定你是304读取缓存还是给你返回最新的数据</p>
+
   </div>
 
 
