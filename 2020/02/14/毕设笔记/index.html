@@ -53,7 +53,7 @@ jQuery(document).ready(function($) {
 <meta property="og:description" content="技术选型 scrapy vs requests+beautifulsoup requests 和 beautifulsoup 都是库，scrapy 是框架； scrapy 框架中可以加入requests 和 beautifulsoup； scrapy 基于 twisted，性能是最大优势； scrapy 方便扩展，提供了很多内置的功能； scrapy 内置的 css 和 xpath selecto">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-02-14T06:29:24.000Z">
-<meta property="article:modified_time" content="2020-02-15T08:00:17.976Z">
+<meta property="article:modified_time" content="2020-03-07T14:40:08.235Z">
 <meta property="article:author" content="Beking">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -147,7 +147,7 @@ jQuery(document).ready(function($) {
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#技术选型-scrapy-vs-requests-beautifulsoup"><span class="toc-number">1.</span> <span class="toc-text">技术选型 scrapy vs requests+beautifulsoup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深度优先和广度优先"><span class="toc-number">2.</span> <span class="toc-text">深度优先和广度优先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL去重策略"><span class="toc-number">3.</span> <span class="toc-text">URL去重策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串编码-encode-decode"><span class="toc-number">4.</span> <span class="toc-text">字符串编码 encode decode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scrapy"><span class="toc-number">5.</span> <span class="toc-text">scrapy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xpath-语法-res-xpath-‘’-extract-first-‘’"><span class="toc-number">6.</span> <span class="toc-text">xpath 语法 res.xpath(‘’).extract_first(‘’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css-选择器-res-css-‘’-extract-first-‘’"><span class="toc-number">7.</span> <span class="toc-text">css 选择器 res.css(‘’).extract_first(‘’)</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#技术选型-scrapy-vs-requests-beautifulsoup"><span class="toc-number">1.</span> <span class="toc-text">技术选型 scrapy vs requests+beautifulsoup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深度优先和广度优先"><span class="toc-number">2.</span> <span class="toc-text">深度优先和广度优先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL去重策略"><span class="toc-number">3.</span> <span class="toc-text">URL去重策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串编码-encode-decode"><span class="toc-number">4.</span> <span class="toc-text">字符串编码 encode decode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scrapy"><span class="toc-number">5.</span> <span class="toc-text">scrapy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xpath-语法-res-xpath-‘’-extract-first-‘’"><span class="toc-number">6.</span> <span class="toc-text">xpath 语法 res.xpath(‘’).extract_first(‘’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css-选择器-res-css-‘’-extract-first-‘’"><span class="toc-number">7.</span> <span class="toc-text">css 选择器 res.css(‘’).extract_first(‘’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分布式爬虫的优点"><span class="toc-number">8.</span> <span class="toc-text">分布式爬虫的优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单机爬虫-gt-分布式爬虫-需要解决的问题"><span class="toc-number">9.</span> <span class="toc-text">单机爬虫 &#x3D;&gt; 分布式爬虫 需要解决的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis"><span class="toc-number">10.</span> <span class="toc-text">Redis</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -202,7 +202,7 @@ jQuery(document).ready(function($) {
 <li>scrapy 框架中可以加入requests 和 beautifulsoup；</li>
 <li>scrapy 基于 twisted，性能是最大优势；</li>
 <li>scrapy 方便扩展，提供了很多内置的功能；</li>
-<li>scrapy 内置的 css 和 xpath selector 非常方便，beautifulsoup 最大的缺点就是慢；</li>
+<li>scrapy 内置的 css 和 xpath selector 非常方便，beautifulsoup 最大的缺点就是慢。</li>
 </ol>
 <h2 id="深度优先和广度优先"><a href="#深度优先和广度优先" class="headerlink" title="深度优先和广度优先"></a>深度优先和广度优先</h2><p>深度优先（递归实现）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">depth_tree</span><span class="params">(tree_node)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> tree_node <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">print</span> (tree_node._data)</span><br><span class="line">        <span class="keyword">if</span> tree_node._left <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> depth_tree(tree_node._left)</span><br><span class="line">        <span class="keyword">if</span> tree_node._right <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> depth_tree(tree_node._right)</span><br></pre></td></tr></table></figure>
@@ -364,7 +364,16 @@ jQuery(document).ready(function($) {
 <td>选择第偶数个tr</td>
 </tr>
 </tbody></table>
-<p>2020-02-15 未完待续</p>
+<h2 id="分布式爬虫的优点"><a href="#分布式爬虫的优点" class="headerlink" title="分布式爬虫的优点"></a>分布式爬虫的优点</h2><ol>
+<li>充分利用多机器的带宽加速爬取；</li>
+<li>充分利用多机的IP加速爬取速度。</li>
+</ol>
+<h2 id="单机爬虫-gt-分布式爬虫-需要解决的问题"><a href="#单机爬虫-gt-分布式爬虫-需要解决的问题" class="headerlink" title="单机爬虫 =&gt; 分布式爬虫 需要解决的问题"></a>单机爬虫 =&gt; 分布式爬虫 需要解决的问题</h2><ol>
+<li>request 队列集中管理：scheduler 以队列形式存储在内存中，而其他服务器无法拿到当前服务器内存中的内容；</li>
+<li>去重集中管理。<br>解决方法：将 request 队列和去重 放到第三方组件中，采用 Redis(内存数据库，读取速度更快)。</li>
+</ol>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><p>Redis 是 key-value 存储系统，数据存在内存中。</p>
+<p>2020-03-07 未完待续</p>
 
   </div>
 
@@ -389,7 +398,7 @@ jQuery(document).ready(function($) {
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#技术选型-scrapy-vs-requests-beautifulsoup"><span class="toc-number">1.</span> <span class="toc-text">技术选型 scrapy vs requests+beautifulsoup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深度优先和广度优先"><span class="toc-number">2.</span> <span class="toc-text">深度优先和广度优先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL去重策略"><span class="toc-number">3.</span> <span class="toc-text">URL去重策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串编码-encode-decode"><span class="toc-number">4.</span> <span class="toc-text">字符串编码 encode decode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scrapy"><span class="toc-number">5.</span> <span class="toc-text">scrapy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xpath-语法-res-xpath-‘’-extract-first-‘’"><span class="toc-number">6.</span> <span class="toc-text">xpath 语法 res.xpath(‘’).extract_first(‘’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css-选择器-res-css-‘’-extract-first-‘’"><span class="toc-number">7.</span> <span class="toc-text">css 选择器 res.css(‘’).extract_first(‘’)</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#技术选型-scrapy-vs-requests-beautifulsoup"><span class="toc-number">1.</span> <span class="toc-text">技术选型 scrapy vs requests+beautifulsoup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深度优先和广度优先"><span class="toc-number">2.</span> <span class="toc-text">深度优先和广度优先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL去重策略"><span class="toc-number">3.</span> <span class="toc-text">URL去重策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串编码-encode-decode"><span class="toc-number">4.</span> <span class="toc-text">字符串编码 encode decode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scrapy"><span class="toc-number">5.</span> <span class="toc-text">scrapy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xpath-语法-res-xpath-‘’-extract-first-‘’"><span class="toc-number">6.</span> <span class="toc-text">xpath 语法 res.xpath(‘’).extract_first(‘’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css-选择器-res-css-‘’-extract-first-‘’"><span class="toc-number">7.</span> <span class="toc-text">css 选择器 res.css(‘’).extract_first(‘’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分布式爬虫的优点"><span class="toc-number">8.</span> <span class="toc-text">分布式爬虫的优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单机爬虫-gt-分布式爬虫-需要解决的问题"><span class="toc-number">9.</span> <span class="toc-text">单机爬虫 &#x3D;&gt; 分布式爬虫 需要解决的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis"><span class="toc-number">10.</span> <span class="toc-text">Redis</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
