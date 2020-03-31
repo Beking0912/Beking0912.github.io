@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<script
+async
+src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+></script>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.10/SmoothScroll.min.js"
+crossorigin="anonymous"
+></script>
+<script src="https://cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+<script>
+var a_idx = 1;
+jQuery(document).ready(function($) {
+  $("html").click(function(e) {
+    var $i = $("<span />").text("+" + a_idx + "S");
+    a_idx = a_idx + 1;
+          var x = e.pageX,
+            y = e.pageY;
+          $i.css({
+            "z-index": 1,
+            top: y - 20,
+            left: x,
+            position: "absolute",
+            "font-weight": "bold",
+            color: "#ff6651"
+          });
+          $("body").append($i);
+          $i.animate(
+            {
+              top: y - 180,
+              opacity: 0
+            },
+            1500,
+            function() {
+              $i.remove();
+            }
+          );
+        });
+      });
+    </script>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="欢迎关注我的CSDN -&gt; 传送门  双重循环实现方法一：拿老数组中的值与新数组中的值对比，出现重复则退出子循环1234567891011121314151617Array.prototype.unique &#x3D; function() &amp;#123;  const newArray &#x3D; [];  let isRepeat;  for (let i &#x3D; 0; i &lt; this.length">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数组去重的10010种方法及思路">
+<meta property="og:url" content="http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/index.html">
+<meta property="og:site_name" content="Beking&#39;s notebook">
+<meta property="og:description" content="欢迎关注我的CSDN -&gt; 传送门  双重循环实现方法一：拿老数组中的值与新数组中的值对比，出现重复则退出子循环1234567891011121314151617Array.prototype.unique &#x3D; function() &amp;#123;  const newArray &#x3D; [];  let isRepeat;  for (let i &#x3D; 0; i &lt; this.length">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-31T12:05:04.000Z">
+<meta property="article:modified_time" content="2020-03-31T12:10:37.818Z">
+<meta property="article:author" content="Beking">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>数组去重的10010种方法及思路</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/Beking0912" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/03/29/CSS3-%E5%AE%9E%E7%8E%B0%E5%B0%8F%E7%90%83%E4%B8%8A%E4%B8%8B%E6%9D%A5%E5%9B%9E%E5%BC%B9%E8%B7%B3/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&text=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&title=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&is_video=false&description=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=数组去重的10010种方法及思路&body=Check out this article: http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&title=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&title=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&title=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&title=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&name=数组去重的10010种方法及思路&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&t=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#双重循环"><span class="toc-number">1.</span> <span class="toc-text">双重循环</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：拿老数组中的值与新数组中的值对比，出现重复则退出子循环"><span class="toc-number">1.1.</span> <span class="toc-text">实现方法一：拿老数组中的值与新数组中的值对比，出现重复则退出子循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：拿老数组当前值与老数组后面的值对比"><span class="toc-number">1.2.</span> <span class="toc-text">实现方法二：拿老数组当前值与老数组后面的值对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法三：对思路二的简化实现"><span class="toc-number">1.3.</span> <span class="toc-text">实现方法三：对思路二的简化实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法四：无需创建新数组，拿老数组当前值与老数组后面的值对比，直接删除重复值"><span class="toc-number">1.4.</span> <span class="toc-text">实现方法四：无需创建新数组，拿老数组当前值与老数组后面的值对比，直接删除重复值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#indexOf"><span class="toc-number">2.</span> <span class="toc-text">indexOf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：如果索引不是第一个索引，说明是重复值"><span class="toc-number">2.1.</span> <span class="toc-text">实现方法一：如果索引不是第一个索引，说明是重复值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：向新数组加入在新数组还没有出现过的值"><span class="toc-number">2.2.</span> <span class="toc-text">实现方法二：向新数组加入在新数组还没有出现过的值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#includes"><span class="toc-number">3.</span> <span class="toc-text">includes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：遍历老数组的值，在新数组中找是否已存在"><span class="toc-number">3.1.</span> <span class="toc-text">实现方法一：遍历老数组的值，在新数组中找是否已存在</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#先排序后去重"><span class="toc-number">4.</span> <span class="toc-text">先排序后去重</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：老数组先排序，将老数组当前值与其相邻值对比"><span class="toc-number">4.1.</span> <span class="toc-text">实现方法一：老数组先排序，将老数组当前值与其相邻值对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：老数组先排序，将老数组当前值与新数组最后一个值对比"><span class="toc-number">4.2.</span> <span class="toc-text">实现方法二：老数组先排序，将老数组当前值与新数组最后一个值对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Object"><span class="toc-number">5.</span> <span class="toc-text">Object</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#利用对象的key不可重复这一特性对数组去重"><span class="toc-number">5.1.</span> <span class="toc-text">利用对象的key不可重复这一特性对数组去重</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：这种方式以上三个问题都未解决"><span class="toc-number">5.2.</span> <span class="toc-text">实现方法一：这种方式以上三个问题都未解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：解决问题1"><span class="toc-number">5.3.</span> <span class="toc-text">实现方法二：解决问题1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法三：解决问题1和3"><span class="toc-number">5.4.</span> <span class="toc-text">实现方法三：解决问题1和3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法四：解决问题2"><span class="toc-number">5.5.</span> <span class="toc-text">实现方法四：解决问题2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map"><span class="toc-number">5.6.</span> <span class="toc-text">Map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：利用map的值不可重复这一特点"><span class="toc-number">5.7.</span> <span class="toc-text">实现方法一：利用map的值不可重复这一特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：利用map的值不可重复这一特点"><span class="toc-number">5.8.</span> <span class="toc-text">实现方法二：利用map的值不可重复这一特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set"><span class="toc-number">6.</span> <span class="toc-text">Set</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：Array-from方法将Set结构转换为数组"><span class="toc-number">6.1.</span> <span class="toc-text">实现方法一：Array.from方法将Set结构转换为数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：利用set数据不重复的特点，解构赋值"><span class="toc-number">6.2.</span> <span class="toc-text">实现方法二：利用set数据不重复的特点，解构赋值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reduce"><span class="toc-number">7.</span> <span class="toc-text">reduce</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：老数组先排序，将值加入新数组的条件：新数组为空、新数组最后一位不等于当前值"><span class="toc-number">7.1.</span> <span class="toc-text">实现方法一：老数组先排序，将值加入新数组的条件：新数组为空、新数组最后一位不等于当前值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提醒-需要考虑各种情况，例如下面这个例子："><span class="toc-number">7.2.</span> <span class="toc-text">提醒:需要考虑各种情况，例如下面这个例子：</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        数组去重的10010种方法及思路
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Beking's notebook</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-03-31T12:05:04.000Z" itemprop="datePublished">2020-03-31</time>
+        
+      
+    </div>
+
+
+      <!-- 页面访问量 -->	
+      <span>	
+        |	
+        <span>阅读量 </span>	
+        <span class="busuanzi-value" id="busuanzi_value_page_pv" >296</span>	
+      </span>
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>欢迎关注我的CSDN -&gt; <a href="https://blog.csdn.net/weixin_38111964/article/details/103506543" target="_blank" rel="noopener">传送门</a></p>
+</blockquote>
+<h2 id="双重循环"><a href="#双重循环" class="headerlink" title="双重循环"></a>双重循环</h2><h3 id="实现方法一：拿老数组中的值与新数组中的值对比，出现重复则退出子循环"><a href="#实现方法一：拿老数组中的值与新数组中的值对比，出现重复则退出子循环" class="headerlink" title="实现方法一：拿老数组中的值与新数组中的值对比，出现重复则退出子循环"></a>实现方法一：拿老数组中的值与新数组中的值对比，出现重复则退出子循环</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> newArray = [];</span><br><span class="line">  <span class="keyword">let</span> isRepeat;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><br><span class="line">    isRepeat = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; newArray.length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>[i] === newArray[j]) &#123;</span><br><span class="line">        isRepeat = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!isRepeat) &#123;</span><br><span class="line">      newArray.push(<span class="keyword">this</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newArray;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方法二：拿老数组当前值与老数组后面的值对比"><a href="#实现方法二：拿老数组当前值与老数组后面的值对比" class="headerlink" title="实现方法二：拿老数组当前值与老数组后面的值对比"></a>实现方法二：拿老数组当前值与老数组后面的值对比</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> newArray = [];</span><br><span class="line">  <span class="keyword">let</span> isRepeat;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><br><span class="line">    isRepeat = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = i + <span class="number">1</span>; j &lt; <span class="keyword">this</span>.length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>[i] === <span class="keyword">this</span>[j]) &#123;</span><br><span class="line">        isRepeat = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!isRepeat) &#123;</span><br><span class="line">      newArray.push(<span class="keyword">this</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newArray;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方法三：对思路二的简化实现"><a href="#实现方法三：对思路二的简化实现" class="headerlink" title="实现方法三：对思路二的简化实现"></a>实现方法三：对思路二的简化实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> newArray = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = i + <span class="number">1</span>; j &lt; <span class="keyword">this</span>.length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>[i] === <span class="keyword">this</span>[j]) &#123;</span><br><span class="line">        j = ++i;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    newArray.push(<span class="keyword">this</span>[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newArray;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方法四：无需创建新数组，拿老数组当前值与老数组后面的值对比，直接删除重复值"><a href="#实现方法四：无需创建新数组，拿老数组当前值与老数组后面的值对比，直接删除重复值" class="headerlink" title="实现方法四：无需创建新数组，拿老数组当前值与老数组后面的值对比，直接删除重复值"></a>实现方法四：无需创建新数组，拿老数组当前值与老数组后面的值对比，直接删除重复值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = i + <span class="number">1</span>; j &lt; <span class="keyword">this</span>.length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>[i] === <span class="keyword">this</span>[j]) &#123;</span><br><span class="line">        arr.splice(j, <span class="number">1</span>);</span><br><span class="line">        j--;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf"></a>indexOf</h2><h3 id="实现方法一：如果索引不是第一个索引，说明是重复值"><a href="#实现方法一：如果索引不是第一个索引，说明是重复值" class="headerlink" title="实现方法一：如果索引不是第一个索引，说明是重复值"></a>实现方法一：如果索引不是第一个索引，说明是重复值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.filter(<span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.indexOf(item) === index;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方法二：向新数组加入在新数组还没有出现过的值"><a href="#实现方法二：向新数组加入在新数组还没有出现过的值" class="headerlink" title="实现方法二：向新数组加入在新数组还没有出现过的值"></a>实现方法二：向新数组加入在新数组还没有出现过的值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> newArray = [];</span><br><span class="line">  <span class="keyword">this</span>.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (newArray.indexOf(item) === <span class="number">-1</span>) &#123;</span><br><span class="line">      newArray.push(item);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> newArray;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="includes"><a href="#includes" class="headerlink" title="includes"></a>includes</h2><h3 id="实现方法一：遍历老数组的值，在新数组中找是否已存在"><a href="#实现方法一：遍历老数组的值，在新数组中找是否已存在" class="headerlink" title="实现方法一：遍历老数组的值，在新数组中找是否已存在"></a>实现方法一：遍历老数组的值，在新数组中找是否已存在</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> newArray = [];</span><br><span class="line">  <span class="keyword">this</span>.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!newArray.includes(item)) &#123;</span><br><span class="line">      newArray.push(item);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> newArray;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="先排序后去重"><a href="#先排序后去重" class="headerlink" title="先排序后去重"></a>先排序后去重</h2><h3 id="实现方法一：老数组先排序，将老数组当前值与其相邻值对比"><a href="#实现方法一：老数组先排序，将老数组当前值与其相邻值对比" class="headerlink" title="实现方法一：老数组先排序，将老数组当前值与其相邻值对比"></a>实现方法一：老数组先排序，将老数组当前值与其相邻值对比</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> newArray = [];</span><br><span class="line">  <span class="keyword">this</span>.sort();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>[i] !== <span class="keyword">this</span>[i + <span class="number">1</span>]) &#123;</span><br><span class="line">      newArray.push(<span class="keyword">this</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newArray;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方法二：老数组先排序，将老数组当前值与新数组最后一个值对比"><a href="#实现方法二：老数组先排序，将老数组当前值与新数组最后一个值对比" class="headerlink" title="实现方法二：老数组先排序，将老数组当前值与新数组最后一个值对比"></a>实现方法二：老数组先排序，将老数组当前值与新数组最后一个值对比</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> newArray = [];</span><br><span class="line">  <span class="keyword">this</span>.sort();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>[i] !== newArray[newArray.length - <span class="number">1</span>]) &#123;</span><br><span class="line">      newArray.push(<span class="keyword">this</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newArray;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><h3 id="利用对象的key不可重复这一特性对数组去重"><a href="#利用对象的key不可重复这一特性对数组去重" class="headerlink" title="利用对象的key不可重复这一特性对数组去重"></a>利用对象的key不可重复这一特性对数组去重</h3><p>需要注意的问题：</p>
+<ul>
+<li>无法区分隐式类型转换成字符串后一样的值，比如 1 和 ‘1’</li>
+<li>无法处理复杂数据类型，比如对象（因为对象作为 key 会变成 [object Object]）</li>
+<li>特殊数据，比如 ‘proto’，因为对象的 proto 属性无法被重写</li>
+</ul>
+<h3 id="实现方法一：这种方式以上三个问题都未解决"><a href="#实现方法一：这种方式以上三个问题都未解决" class="headerlink" title="实现方法一：这种方式以上三个问题都未解决"></a>实现方法一：这种方式以上三个问题都未解决</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> tmp = &#123;&#125;;</span><br><span class="line">  <span class="keyword">return</span> arr.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item, index, array</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> tmp.hasOwnProperty(item) ? <span class="literal">false</span> : (obj[item] = <span class="literal">true</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方法二：解决问题1"><a href="#实现方法二：解决问题1" class="headerlink" title="实现方法二：解决问题1"></a>实现方法二：解决问题1</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> tmp = &#123;&#125;;</span><br><span class="line">  <span class="keyword">return</span> arr.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item, index, array</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> tmp.hasOwnProperty(<span class="keyword">typeof</span> item + item) ? <span class="literal">false</span> : (obj[<span class="keyword">typeof</span> item + item] = <span class="literal">true</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方法三：解决问题1和3"><a href="#实现方法三：解决问题1和3" class="headerlink" title="实现方法三：解决问题1和3"></a>实现方法三：解决问题1和3</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> newArray = [];</span><br><span class="line">  <span class="keyword">const</span> tmp = &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!tmp[<span class="keyword">typeof</span> <span class="keyword">this</span>[i] + <span class="keyword">this</span>[i]]) &#123;</span><br><span class="line">      tmp[<span class="keyword">typeof</span> <span class="keyword">this</span>[i] + <span class="keyword">this</span>[i]] = <span class="number">1</span>;</span><br><span class="line">      newArray.push(<span class="keyword">this</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newArray;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方法四：解决问题2"><a href="#实现方法四：解决问题2" class="headerlink" title="实现方法四：解决问题2"></a>实现方法四：解决问题2</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> newArray = [];</span><br><span class="line">  <span class="keyword">const</span> tmp = &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!tmp[<span class="keyword">typeof</span> <span class="keyword">this</span>[i] + <span class="built_in">JSON</span>.stringify(<span class="keyword">this</span>[i])]) &#123;</span><br><span class="line">      <span class="comment">// 使用JSON.stringify()进行序列化</span></span><br><span class="line">      tmp[<span class="keyword">typeof</span> <span class="keyword">this</span>[i] + <span class="built_in">JSON</span>.stringify(<span class="keyword">this</span>[i])] = <span class="number">1</span>; <span class="comment">// 将对象序列化之后作为key来使用</span></span><br><span class="line">      newArray.push(<span class="keyword">this</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newArray;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>补充一个知识点，map和object的区别：</p>
+<ul>
+<li>object的键只能是字符串或symbols，map可以是任意值；</li>
+<li>map有序，object无序；</li>
+<li>可以通过size获取map键值对个数，object只能手动计算；</li>
+<li>map可迭代，object需要先获取键数组再迭代；</li>
+<li>object有自己的原型，原型链上的键名可能会与自己在对象上设置的键名重复；es5允许用Object.create(null)创建一个没有原型的对象；</li>
+<li>map在涉及频繁增删改键值对时有性能优势；<h3 id="实现方法一：利用map的值不可重复这一特点"><a href="#实现方法一：利用map的值不可重复这一特点" class="headerlink" title="实现方法一：利用map的值不可重复这一特点"></a>实现方法一：利用map的值不可重复这一特点</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> newArray = [];</span><br><span class="line">  <span class="keyword">const</span> tmp = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!tmp.get(<span class="keyword">this</span>[i])) &#123;</span><br><span class="line">      tmp.set(<span class="keyword">this</span>[i], <span class="number">1</span>);</span><br><span class="line">      newArray.push(<span class="keyword">this</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newArray;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方法二：利用map的值不可重复这一特点"><a href="#实现方法二：利用map的值不可重复这一特点" class="headerlink" title="实现方法二：利用map的值不可重复这一特点"></a>实现方法二：利用map的值不可重复这一特点</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> tmp = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.filter(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> !tmp.has(item) &amp;&amp; tmp.set(item, <span class="number">1</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><h3 id="实现方法一：Array-from方法将Set结构转换为数组"><a href="#实现方法一：Array-from方法将Set结构转换为数组" class="headerlink" title="实现方法一：Array.from方法将Set结构转换为数组"></a>实现方法一：Array.from方法将Set结构转换为数组</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">set</span> = new Set(this);</span><br><span class="line">  return Array.from(<span class="keyword">set</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方法二：利用set数据不重复的特点，解构赋值"><a href="#实现方法二：利用set数据不重复的特点，解构赋值" class="headerlink" title="实现方法二：利用set数据不重复的特点，解构赋值"></a>实现方法二：利用set数据不重复的特点，解构赋值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [...new <span class="built_in">Set</span>(<span class="keyword">this</span>)];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h2><h3 id="实现方法一：老数组先排序，将值加入新数组的条件：新数组为空、新数组最后一位不等于当前值"><a href="#实现方法一：老数组先排序，将值加入新数组的条件：新数组为空、新数组最后一位不等于当前值" class="headerlink" title="实现方法一：老数组先排序，将值加入新数组的条件：新数组为空、新数组最后一位不等于当前值"></a>实现方法一：老数组先排序，将值加入新数组的条件：新数组为空、新数组最后一位不等于当前值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.sort().reduce(<span class="function">(<span class="params">init, current</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (init.length === <span class="number">0</span> || init[init.length - <span class="number">1</span>] !== current) &#123;</span><br><span class="line">      init.push(current);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> init;</span><br><span class="line">  &#125;, []);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="提醒-需要考虑各种情况，例如下面这个例子："><a href="#提醒-需要考虑各种情况，例如下面这个例子：" class="headerlink" title="提醒:需要考虑各种情况，例如下面这个例子："></a>提醒:需要考虑各种情况，例如下面这个例子：</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'1'</span>, <span class="string">'1'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'0'</span>, <span class="string">'0'</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, &#123;&#125;, &#123;&#125;, [], [], /a/, /a/];</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+  </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/Beking0912" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#双重循环"><span class="toc-number">1.</span> <span class="toc-text">双重循环</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：拿老数组中的值与新数组中的值对比，出现重复则退出子循环"><span class="toc-number">1.1.</span> <span class="toc-text">实现方法一：拿老数组中的值与新数组中的值对比，出现重复则退出子循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：拿老数组当前值与老数组后面的值对比"><span class="toc-number">1.2.</span> <span class="toc-text">实现方法二：拿老数组当前值与老数组后面的值对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法三：对思路二的简化实现"><span class="toc-number">1.3.</span> <span class="toc-text">实现方法三：对思路二的简化实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法四：无需创建新数组，拿老数组当前值与老数组后面的值对比，直接删除重复值"><span class="toc-number">1.4.</span> <span class="toc-text">实现方法四：无需创建新数组，拿老数组当前值与老数组后面的值对比，直接删除重复值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#indexOf"><span class="toc-number">2.</span> <span class="toc-text">indexOf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：如果索引不是第一个索引，说明是重复值"><span class="toc-number">2.1.</span> <span class="toc-text">实现方法一：如果索引不是第一个索引，说明是重复值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：向新数组加入在新数组还没有出现过的值"><span class="toc-number">2.2.</span> <span class="toc-text">实现方法二：向新数组加入在新数组还没有出现过的值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#includes"><span class="toc-number">3.</span> <span class="toc-text">includes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：遍历老数组的值，在新数组中找是否已存在"><span class="toc-number">3.1.</span> <span class="toc-text">实现方法一：遍历老数组的值，在新数组中找是否已存在</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#先排序后去重"><span class="toc-number">4.</span> <span class="toc-text">先排序后去重</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：老数组先排序，将老数组当前值与其相邻值对比"><span class="toc-number">4.1.</span> <span class="toc-text">实现方法一：老数组先排序，将老数组当前值与其相邻值对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：老数组先排序，将老数组当前值与新数组最后一个值对比"><span class="toc-number">4.2.</span> <span class="toc-text">实现方法二：老数组先排序，将老数组当前值与新数组最后一个值对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Object"><span class="toc-number">5.</span> <span class="toc-text">Object</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#利用对象的key不可重复这一特性对数组去重"><span class="toc-number">5.1.</span> <span class="toc-text">利用对象的key不可重复这一特性对数组去重</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：这种方式以上三个问题都未解决"><span class="toc-number">5.2.</span> <span class="toc-text">实现方法一：这种方式以上三个问题都未解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：解决问题1"><span class="toc-number">5.3.</span> <span class="toc-text">实现方法二：解决问题1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法三：解决问题1和3"><span class="toc-number">5.4.</span> <span class="toc-text">实现方法三：解决问题1和3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法四：解决问题2"><span class="toc-number">5.5.</span> <span class="toc-text">实现方法四：解决问题2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map"><span class="toc-number">5.6.</span> <span class="toc-text">Map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：利用map的值不可重复这一特点"><span class="toc-number">5.7.</span> <span class="toc-text">实现方法一：利用map的值不可重复这一特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：利用map的值不可重复这一特点"><span class="toc-number">5.8.</span> <span class="toc-text">实现方法二：利用map的值不可重复这一特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set"><span class="toc-number">6.</span> <span class="toc-text">Set</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：Array-from方法将Set结构转换为数组"><span class="toc-number">6.1.</span> <span class="toc-text">实现方法一：Array.from方法将Set结构转换为数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法二：利用set数据不重复的特点，解构赋值"><span class="toc-number">6.2.</span> <span class="toc-text">实现方法二：利用set数据不重复的特点，解构赋值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reduce"><span class="toc-number">7.</span> <span class="toc-text">reduce</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方法一：老数组先排序，将值加入新数组的条件：新数组为空、新数组最后一位不等于当前值"><span class="toc-number">7.1.</span> <span class="toc-text">实现方法一：老数组先排序，将值加入新数组的条件：新数组为空、新数组最后一位不等于当前值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提醒-需要考虑各种情况，例如下面这个例子："><span class="toc-number">7.2.</span> <span class="toc-text">提醒:需要考虑各种情况，例如下面这个例子：</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&text=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&title=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&is_video=false&description=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=数组去重的10010种方法及思路&body=Check out this article: http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&title=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&title=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&title=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&title=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&name=数组去重的10010种方法及思路&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2020/03/31/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%8410010%E7%A7%8D%E6%96%B9%E6%B3%95%E5%8F%8A%E6%80%9D%E8%B7%AF/&t=数组去重的10010种方法及思路" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Beking
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/Beking0912" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/lib/style.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
