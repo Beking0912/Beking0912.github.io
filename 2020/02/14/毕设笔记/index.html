@@ -53,7 +53,7 @@ jQuery(document).ready(function($) {
 <meta property="og:description" content="技术选型 scrapy vs requests+beautifulsoup requests 和 beautifulsoup 都是库，scrapy 是框架； scrapy 框架中可以加入requests 和 beautifulsoup； scrapy 基于 twisted，性能是最大优势； scrapy 方便扩展，提供了很多内置的功能； scrapy 内置的 css 和 xpath selecto">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-02-14T06:29:24.000Z">
-<meta property="article:modified_time" content="2020-05-02T01:22:46.288Z">
+<meta property="article:modified_time" content="2020-05-02T02:26:00.385Z">
 <meta property="article:author" content="Beking">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -241,8 +241,8 @@ jQuery(document).ready(function($) {
 </ol>
 <h2 id="分布式原理"><a href="#分布式原理" class="headerlink" title="分布式原理"></a>分布式原理</h2><p>把自己的核心服务器称为master，而把用于跑爬虫程序的机器称为slave。</p>
 <p>我们知 道，采用scrapy框架抓取网页，我们需要首先给定它一些start_urls，爬虫首先访问start_urls里面的url，再根据我们的具体逻辑，对里面的元素、或者是其他的二级、三级页面进行抓取。而要实现分布式，我们只需要在这个starts_urls里面做文章就行了。</p>
-<p>我们在master上搭建一个redis数据库（注意这个数据库只用作url的存储，不关心爬取的具体数据，不要和后面的mongodb或者mysql混淆），并对每一个需要爬取的网站类型，都开辟一个单独的列表字段。通过设置slave上scrapy-redis获取url的地址为master地址。这样的结果就是，尽管有多个slave，然而大家获取url的地方只有一个，那就是服务器master上的redis数据库。</p>
-<p>并且，由于scrapy-redis自身的队列机制，slave获取的链接不会相互冲突。这样各个slave在完成抓取任务之后，再把获取的结果汇总到服务器上（这时的数据存储不再在是redis，而是mongodb或者 mysql等存放具体内容的数据库了）</p>
+<p>我们在master上搭建一个redis数据库（注意这个数据库只用作url的存储，不关心爬取的具体数据），并对每一个需要爬取的网站类型，都开辟一个单独的列表字段。通过设置slave上scrapy-redis获取url的地址为master地址。这样的结果就是，尽管有多个slave，然而大家获取url的地方只有一个，那就是服务器master上的redis数据库。</p>
+<p>并且，由于scrapy-redis自身的队列机制，slave获取的链接不会相互冲突。这样各个slave在完成抓取任务之后，再把获取的结果汇总到服务器上。</p>
 <p>这种方法的还有好处就是程序移植性强，只要处理好路径问题，把slave上的程序移植到另一台机器上运行，基本上就是复制粘贴的事情。</p>
 <h2 id="分布式的实现"><a href="#分布式的实现" class="headerlink" title="分布式的实现"></a>分布式的实现</h2><ol>
 <li>使用两台机器，一台是win10，一台是centos7，分别在两台机器上部署scrapy来进行分布式抓取一个网站</li>
