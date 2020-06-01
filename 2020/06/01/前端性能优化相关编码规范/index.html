@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<script
+async
+src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+></script>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.10/SmoothScroll.min.js"
+crossorigin="anonymous"
+></script>
+<script src="https://cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+<script>
+var a_idx = 1;
+jQuery(document).ready(function($) {
+  $("html").click(function(e) {
+    var $i = $("<span />").text("+" + a_idx + "S");
+    a_idx = a_idx + 1;
+          var x = e.pageX,
+            y = e.pageY;
+          $i.css({
+            "z-index": 1,
+            top: y - 20,
+            left: x,
+            position: "absolute",
+            "font-weight": "bold",
+            color: "#ff6651"
+          });
+          $("body").append($i);
+          $i.animate(
+            {
+              top: y - 180,
+              opacity: 0
+            },
+            1500,
+            function() {
+              $i.remove();
+            }
+          );
+        });
+      });
+    </script>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="凹凸实验室 | 前端开发规范  JavaScript 相关使用局部变量当函数中需要多次读取一个多层嵌套对象的属性时，建议将对象的属性值保存为局部变量，避免多次查找带来的性能开销。 减少条件判断能使用三目运算符和逻辑运算符解决的，就不要使用条件判断。 定时器的清除如果不是必要的全局定时器的使用，在离开当前组件时一定要将定时器进行清除，避免造成内存泄漏。 慎用 for-in避免在对性能影响较大的地方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端性能优化相关编码规范">
+<meta property="og:url" content="http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:site_name" content="Beking&#39;s notebook">
+<meta property="og:description" content="凹凸实验室 | 前端开发规范  JavaScript 相关使用局部变量当函数中需要多次读取一个多层嵌套对象的属性时，建议将对象的属性值保存为局部变量，避免多次查找带来的性能开销。 减少条件判断能使用三目运算符和逻辑运算符解决的，就不要使用条件判断。 定时器的清除如果不是必要的全局定时器的使用，在离开当前组件时一定要将定时器进行清除，避免造成内存泄漏。 慎用 for-in避免在对性能影响较大的地方">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-06-01T08:54:43.000Z">
+<meta property="article:modified_time" content="2020-06-01T08:58:26.271Z">
+<meta property="article:author" content="Beking">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>前端性能优化相关编码规范</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/Beking0912" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/05/08/%E5%89%8D%E7%AB%AF%E8%AF%86%E5%88%AB%E5%94%AF%E4%B8%80%E8%AE%BE%E5%A4%87%E7%9A%84%E6%96%B9%E6%A1%88/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&text=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&is_video=false&description=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=前端性能优化相关编码规范&body=Check out this article: http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&name=前端性能优化相关编码规范&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&t=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-相关"><span class="toc-number">1.</span> <span class="toc-text">JavaScript 相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用局部变量"><span class="toc-number">1.1.</span> <span class="toc-text">使用局部变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少条件判断"><span class="toc-number">1.2.</span> <span class="toc-text">减少条件判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定时器的清除"><span class="toc-number">1.3.</span> <span class="toc-text">定时器的清除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#慎用-for-in"><span class="toc-number">1.4.</span> <span class="toc-text">慎用 for-in</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免不必要的-DOM-操作"><span class="toc-number">1.5.</span> <span class="toc-text">避免不必要的 DOM 操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不可缺少分号的情况"><span class="toc-number">1.6.</span> <span class="toc-text">不可缺少分号的情况</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#React-相关"><span class="toc-number">2.</span> <span class="toc-text">React 相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#避免使用数组索引作-key"><span class="toc-number">2.1.</span> <span class="toc-text">避免使用数组索引作 key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-PureComponent"><span class="toc-number">2.2.</span> <span class="toc-text">使用 PureComponent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#慎用-setState"><span class="toc-number">2.3.</span> <span class="toc-text">慎用 setState</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#慎用-bind"><span class="toc-number">2.4.</span> <span class="toc-text">慎用 bind</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shouldComponentUpdate"><span class="toc-number">2.5.</span> <span class="toc-text">shouldComponentUpdate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#StyledComponent-不要用于动画"><span class="toc-number">2.6.</span> <span class="toc-text">StyledComponent 不要用于动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-相关"><span class="toc-number">3.</span> <span class="toc-text">CSS 相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#提升-CSS-选择器性能"><span class="toc-number">3.1.</span> <span class="toc-text">提升 CSS 选择器性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正确使用-display-的属性"><span class="toc-number">3.2.</span> <span class="toc-text">正确使用 display 的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免过分重排"><span class="toc-number">3.3.</span> <span class="toc-text">避免过分重排</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        前端性能优化相关编码规范
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Beking's notebook</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-06-01T08:54:43.000Z" itemprop="datePublished">2020-06-01</time>
+        
+      
+    </div>
+
+
+      <!-- 页面访问量 -->	
+      <span>	
+        |	
+        <span>阅读量 </span>	
+        <span class="busuanzi-value" id="busuanzi_value_page_pv" >296</span>	
+      </span>
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p><a href="https://guide.aotu.io/docs/index.html" target="_blank" rel="noopener">凹凸实验室</a> | <a href="https://www.w3cschool.cn/webdevelopment/drshcozt.html" target="_blank" rel="noopener">前端开发规范</a></p>
+</blockquote>
+<h2 id="JavaScript-相关"><a href="#JavaScript-相关" class="headerlink" title="JavaScript 相关"></a>JavaScript 相关</h2><h3 id="使用局部变量"><a href="#使用局部变量" class="headerlink" title="使用局部变量"></a>使用局部变量</h3><p>当函数中需要多次读取一个多层嵌套对象的属性时，建议将对象的属性值保存为局部变量，避免多次查找带来的性能开销。</p>
+<h3 id="减少条件判断"><a href="#减少条件判断" class="headerlink" title="减少条件判断"></a>减少条件判断</h3><p>能使用三目运算符和逻辑运算符解决的，就不要使用条件判断。</p>
+<h3 id="定时器的清除"><a href="#定时器的清除" class="headerlink" title="定时器的清除"></a>定时器的清除</h3><p>如果不是必要的全局定时器的使用，在离开当前组件时一定要将定时器进行清除，避免造成内存泄漏。</p>
+<h3 id="慎用-for-in"><a href="#慎用-for-in" class="headerlink" title="慎用 for-in"></a>慎用 for-in</h3><p>避免在对性能影响较大的地方使用 for-in。<br>for-in 循环需要脚本引擎构建一个枚举属性列表，而且每次都要从头重复检查。for-in 循环只用于 object/map/hash 的遍历，对 Array 用 for-in 循环有时会出错，因为它并不是从 0 到 length - 1 进行遍历， 而是所有出现在对象及其原型链的键值。</p>
+<h3 id="避免不必要的-DOM-操作"><a href="#避免不必要的-DOM-操作" class="headerlink" title="避免不必要的 DOM 操作"></a>避免不必要的 DOM 操作</h3><p>执行 DOM 交互的代码比一般的 js 代码要慢，因此尽量减少 DOM 交互。例如，动态的使用 innerHTML 插入 HTML 语句比创建 DOM 节点更快；当一个元素出现多次时，将它保存在一个变量中，避免多次查询 DOM 树。</p>
+<h3 id="不可缺少分号的情况"><a href="#不可缺少分号的情况" class="headerlink" title="不可缺少分号的情况"></a>不可缺少分号的情况</h3><p>不加分号的情况下，一些隐式的代码嵌套会引发难以察觉，举例如下：</p>
+<ol>
+<li>JavaScript 错误 —— 首先返回 42 的那个 function 被第二个 function 当中参数传入调用，接着数字 42 也被“调用”而导致出错。</li>
+<li>八成你会得到 ‘no such property in undefined’ 的错误提示，因为在真实环境中的调用是这个样子：x[ffVersion, ieVersion]<a href="">isIE</a>。</li>
+<li>die 总是被调用。因为数组减 1 的结果是 NaN，它不等于任何东西（无论 resultOfOperation 是否返回 NaN）。所以最终的结果是 die() 执行完所获得值将赋给 THINGS_TO_EAT。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.</span></span><br><span class="line">MyClass.prototype.myMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">42</span>;</span><br><span class="line">&#125;  <span class="comment">// No semicolon here.</span></span><br><span class="line"> </span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Some initialization code wrapped in a function to create a scope for locals.</span></span><br><span class="line">&#125;)();</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> x = &#123;</span><br><span class="line">  <span class="string">'i'</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="string">'j'</span>: <span class="number">2</span></span><br><span class="line">&#125;  <span class="comment">// No semicolon here.</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2.  Trying to do one thing on Internet Explorer and another on Firefox.</span></span><br><span class="line"><span class="comment">// I know you'd never write code like this, but throw me a bone.</span></span><br><span class="line">[ffVersion, ieVersion][isIE]();</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> THINGS_TO_EAT = [apples, oysters, sprayOnCheese]  <span class="comment">// No semicolon here.</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 3. conditional execution a la bash</span></span><br><span class="line"><span class="number">-1</span> == resultOfOperation() || die();</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<h2 id="React-相关"><a href="#React-相关" class="headerlink" title="React 相关"></a>React 相关</h2><h3 id="避免使用数组索引作-key"><a href="#避免使用数组索引作-key" class="headerlink" title="避免使用数组索引作 key"></a>避免使用数组索引作 key</h3><p>如果 list 发生变化，比如从中间去除一条数据，两次渲染之间 key 相同的子组件，React 认为他们是同一个组件，这样很多个 Child 组件都改变了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.map(<span class="function">(<span class="params">value, index</span>) =&gt;</span> &#123;</span><br><span class="line">   &lt;Child key=&#123;index&#125; data=&#123;value&#125; /&gt;</span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-PureComponent"><a href="#使用-PureComponent" class="headerlink" title="使用 PureComponent"></a>使用 PureComponent</h3><p>只需把继承类从 Component 换成 PureComponent 即可。</p>
+<p>当组件更新时，如果组件的 props 和 state 都没发生改变，render 方法就不会触发，省去 Virtual DOM 的生成和比对过程，达到提升性能的目的。而且可以少写 shouldComponentUpdate 函数，节省代码。</p>
+<p>原理：React 自动做了一层浅比较。shallowEqual 会比较 Object.keys(state | props) 的长度是否一致，每一个 key 是否两者都有，并且是否是一个引用，也就是只比较了第一层的值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">this</span>._compositeType === CompositeTypes.PureClass) &#123;</span><br><span class="line">  shouldUpdate = !shallowEqual(prevProps, nextProps)</span><br><span class="line">  || !shallowEqual(inst.state, nextState);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="慎用-setState"><a href="#慎用-setState" class="headerlink" title="慎用 setState"></a>慎用 setState</h3><p>Render 函数里面要用到的东西放 props/state，其他的不要放进去，写成模块内的私有变量（跨实例共享）或者组件实例上的变量。</p>
+<p>如果是和视图无关的，但有变化的数据，不要放在 state 里面，比如某个组件需要 mouseDown 时标记开始记录，mouseUp 清除记录，最好直接当做实例的一个属性。这样可以避免执行无效的 render 操作。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  record = <span class="literal">false</span>;</span><br><span class="line">  onMouseDown = <span class="function"><span class="params">()</span> =&gt;</span> (<span class="keyword">this</span>.record = <span class="literal">true</span>);</span><br><span class="line">  onMouseUp = <span class="function"><span class="params">()</span> =&gt;</span> (<span class="keyword">this</span>.record = <span class="literal">false</span>);</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;button onMouseDown=&#123;<span class="keyword">this</span>.onMouseDown&#125; onMouseUp=&#123;<span class="keyword">this</span>.onMouseUp&#125; /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="慎用-bind"><a href="#慎用-bind" class="headerlink" title="慎用 bind"></a>慎用 bind</h3><p>Component 的 render 里不使用 bind 绑定 this，可以放在 constructor 里绑定好，或者直接使用箭头函数，如果要动态传参，可以使用闭包，或者可以直接把处理函数传入子组件，子组建时可以拿到参数，再执行父组件的处理函数就可以了。</p>
+<p>如果每次都在 render 里面的 jsx 去 bind 这个方法，会消耗性能，因为每次 bind 都会返回一个新函数，重复创建静态函数肯定是不合适的（闭包也是这样，但 bind 内部有一系列的算法，比闭包复杂多了）。 </p>
+<h3 id="shouldComponentUpdate"><a href="#shouldComponentUpdate" class="headerlink" title="shouldComponentUpdate"></a>shouldComponentUpdate</h3><p>表示组件是否需要被更新。可以再次生命周期做判断，让一些确定不会改变视图的操作，直接不去计算。</p>
+<p>shouldComponentUpdate 默认返回值是 true，也就是组件一定会更新，如果返回值为 false，会阻止后面 componentWillUpdate、render、componentDidUpdate 等操作。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果一个子组件的 name 属性不变，子组件就不需要更新</span></span><br><span class="line">shouldComponentUpdate(nextProps) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; data &#125; = <span class="keyword">this</span>.props</span><br><span class="line">  <span class="keyword">const</span> &#123; name &#125; = data</span><br><span class="line">  <span class="keyword">return</span> name !== nextProps.data.name</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="StyledComponent-不要用于动画"><a href="#StyledComponent-不要用于动画" class="headerlink" title="StyledComponent 不要用于动画"></a>StyledComponent 不要用于动画</h3><p>styled-component 会为每个状态生成一个样式表，而动画一般会有很多中间值在短时间内进行变化，如果动画值通过 props 传入该 StyledComponent 来应用样式，这样会生成很多样式，性能非常差。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Bar = styled.div&lt;&#123; <span class="attr">width</span>: boolean &#125;&gt;<span class="string">`</span></span><br><span class="line"><span class="string">  color: red;</span></span><br><span class="line"><span class="string">  width: <span class="subst">$&#123;props =&gt; props.width&#125;</span>;   // 不推荐</span></span><br><span class="line"><span class="string">`</span>;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="CSS-相关"><a href="#CSS-相关" class="headerlink" title="CSS 相关"></a>CSS 相关</h2><h3 id="提升-CSS-选择器性能"><a href="#提升-CSS-选择器性能" class="headerlink" title="提升 CSS 选择器性能"></a>提升 CSS 选择器性能</h3><p>CSS 选择器是从右到左进行规则匹配的，因此有以下几点需要注意：</p>
+<ol>
+<li>避免使用通用选择器。</li>
+<li>避免使用子选择器。</li>
+<li>避免使用标签或 class 选择器限制 id 选择器，同时也违反关注分离原则。</li>
+<li>避免使用多层标签选择器，使用 class 选择器替换，减少 css 查找。</li>
+<li>建议使用继承。</li>
+</ol>
+<h3 id="正确使用-display-的属性"><a href="#正确使用-display-的属性" class="headerlink" title="正确使用 display 的属性"></a>正确使用 display 的属性</h3><ol>
+<li>display: inline 后不应该再使用 width、height、margin、padding 以及 float；</li>
+<li>display: inline-block 后不应该再使用 float；</li>
+<li>display: block 后不应该再使用 vertical-align；</li>
+<li>display: table-* 后不应该再使用 margin 或者 float；    </li>
+</ol>
+<h3 id="避免过分重排"><a href="#避免过分重排" class="headerlink" title="避免过分重排"></a>避免过分重排</h3><p>当发生重排的时候，浏览器需要重新计算布局位置与大小。常见的重排元素:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">width</span>、<span class="selector-tag">height</span>、<span class="selector-tag">padding</span>、<span class="selector-tag">margin</span>、<span class="selector-tag">display</span>、<span class="selector-tag">border-width</span>、<span class="selector-tag">position</span>、<span class="selector-tag">top</span>、<span class="selector-tag">left</span>、<span class="selector-tag">right</span>、<span class="selector-tag">bottom</span>、<span class="selector-tag">font-size</span>、<span class="selector-tag">float</span>、<span class="selector-tag">text-align</span>、<span class="selector-tag">overflow-y</span>、<span class="selector-tag">font-weight</span>、<span class="selector-tag">overflow</span>、<span class="selector-tag">font-family</span>、<span class="selector-tag">line-height</span>、<span class="selector-tag">vertical-align</span>、<span class="selector-tag">clear</span>、<span class="selector-tag">white-space</span>、<span class="selector-tag">min-height</span></span><br></pre></td></tr></table></figure>
+
+  </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/Beking0912" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript-相关"><span class="toc-number">1.</span> <span class="toc-text">JavaScript 相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用局部变量"><span class="toc-number">1.1.</span> <span class="toc-text">使用局部变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少条件判断"><span class="toc-number">1.2.</span> <span class="toc-text">减少条件判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定时器的清除"><span class="toc-number">1.3.</span> <span class="toc-text">定时器的清除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#慎用-for-in"><span class="toc-number">1.4.</span> <span class="toc-text">慎用 for-in</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免不必要的-DOM-操作"><span class="toc-number">1.5.</span> <span class="toc-text">避免不必要的 DOM 操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不可缺少分号的情况"><span class="toc-number">1.6.</span> <span class="toc-text">不可缺少分号的情况</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#React-相关"><span class="toc-number">2.</span> <span class="toc-text">React 相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#避免使用数组索引作-key"><span class="toc-number">2.1.</span> <span class="toc-text">避免使用数组索引作 key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-PureComponent"><span class="toc-number">2.2.</span> <span class="toc-text">使用 PureComponent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#慎用-setState"><span class="toc-number">2.3.</span> <span class="toc-text">慎用 setState</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#慎用-bind"><span class="toc-number">2.4.</span> <span class="toc-text">慎用 bind</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shouldComponentUpdate"><span class="toc-number">2.5.</span> <span class="toc-text">shouldComponentUpdate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#StyledComponent-不要用于动画"><span class="toc-number">2.6.</span> <span class="toc-text">StyledComponent 不要用于动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-相关"><span class="toc-number">3.</span> <span class="toc-text">CSS 相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#提升-CSS-选择器性能"><span class="toc-number">3.1.</span> <span class="toc-text">提升 CSS 选择器性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正确使用-display-的属性"><span class="toc-number">3.2.</span> <span class="toc-text">正确使用 display 的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免过分重排"><span class="toc-number">3.3.</span> <span class="toc-text">避免过分重排</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&text=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&is_video=false&description=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=前端性能优化相关编码规范&body=Check out this article: http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&name=前端性能优化相关编码规范&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2020/06/01/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&t=前端性能优化相关编码规范" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Beking
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/Beking0912" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/lib/style.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
